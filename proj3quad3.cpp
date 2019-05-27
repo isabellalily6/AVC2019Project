@@ -48,7 +48,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 		}
 		
-	UI.printf("line_error: "+line_error);
+	UI.printf("line_error: %.1f",line_error);
 	
 	return 0;	
 } 
