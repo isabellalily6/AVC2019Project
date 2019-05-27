@@ -31,7 +31,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float whiteArr[cam_width];
 	float errorArray[cam_width];
 	int whiteBool = 0;
-	double threshold = 0.3;
+	double threshold = 30;
 
 	//how to get array of white pixel? use that for totwhite
 	
@@ -66,7 +66,7 @@ int Robot::FollowLine(){
 	MeasureLine();
 	if(line_present == 1) {
 		dv = (int)(line_error*kp);
-		v_left = v_left_go + dv;
+		v_left = v_left_go - dv;
 		v_right = v_right_go + dv;
 		printf(" \nline error: %.1f dv: %d",line_error,dv);
 		SetMotors();
