@@ -37,7 +37,9 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	
 	//for(int countRow = 0; countRow < 240; countRow++) {
 	int middleIndex = cam_width/2;
+	line_error = 0;
 		for(int countCol = 0; countCol < 320; countCol++){
+			
 			totwhite = get_pixel(240/2, countCol,3);
 			if(totwhite > threshold){
 				whiteArr[countCol] = 0;
