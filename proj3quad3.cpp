@@ -50,7 +50,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 		}
 		
-	printf("\nwhiteness: %.1f",whiteness);
+	printf("\nwhiteness: %.1f",totwhite);
 	
 	return 0;	
 } 
