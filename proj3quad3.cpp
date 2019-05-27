@@ -31,27 +31,24 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float whiteArr[cam_width];
 	float errorArray[cam_width];
 	int whiteBool = 0;
+	double threshold = 0.3;
 
 	//how to get array of white pixel? use that for totwhite
 	
 	//for(int countRow = 0; countRow < 240; countRow++) {
+	int middleIndex = cam_width/2;
 		for(int countCol = 0; countCol < 320; countCol++){
 			totwhite = get_pixel(240/2, countCol,3);
-			if(totwhite > 0.3){
-				whiteBool = 0;
+			if(totwhite > threshold){
+				whiteArr[i] = 0;
 			} else {
-			whiteBool = 1;	
+			whiteArr[i] = 1;	
 			}
-			whiteArr[countCol] = whiteBool;
+			line_error += whiteArr[i] * (i-middleIndex);
+			
 		}
-		int middleIndex = cam_width/2;
-		for(int i = 0; i < 320; i++){
-			errorArray[i] = whiteArr[i] - (i - middleIndex);
-			printf("\nerrorArray: %f",errorArray[i]);
-		}	
-		for(int i = 0; i < 320; i++){
-			line_error = line_error + errorArray[i];
-		}		
+		
+	UI.printf("line_error: "+line_error);
 	
 	return 0;	
 } 
