@@ -50,7 +50,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 		}
 		
-	printf("line_error: %.1f",line_error);
+	//printf("\nline_error: %.1f",line_error);
 	
 	return 0;	
 } 
@@ -59,8 +59,7 @@ int Robot::SetMotors(){
 	 set_motors(3, v_left);
 	 set_motors(5, v_right);
 	 hardware_exchange();
-	 return 0;
-	 
+	 return 0; 
 
 }
 int Robot::FollowLine(){
@@ -69,7 +68,7 @@ int Robot::FollowLine(){
 		dv = (int)(line_error*kp);
 		v_left = v_left_go + dv;
 		v_right = v_right_go + dv;
-		printf(" line error: %f dv: %d",line_error,dv);
+		printf(" \nline error: %.1f dv: %d",line_error,dv);
 		SetMotors();
 	} else {
 			printf(" Line missing");
