@@ -14,7 +14,7 @@ class Robot{
     const int v_left_go = 52;
     const int v_right_go = 43;
     double kp = 0.05;
-    int line_present = 0;
+    int line_present = 1;
     public:
     //Rob(){};
 	int InitHardware();
