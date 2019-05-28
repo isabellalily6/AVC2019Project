@@ -70,7 +70,7 @@ int Robot::FollowLine(){
 		if(v_left > 55) {
 		v_left = 55;
 		} 
-		if(v_right < ){
+		if(v_right < 41){
 		v_right = 41;
 		}
 		
