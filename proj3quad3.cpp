@@ -84,6 +84,7 @@ int Robot::FollowLine(){
 			v_right = 30;
 			}
 		printf(" \nline error: %.1f dv: %d",line_error,dv);
+		printf("\n v_left: %d v_right: %d",v_left,v_right;)
 		
 		SetMotors();
 	} else {
