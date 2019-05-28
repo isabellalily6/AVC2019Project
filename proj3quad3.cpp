@@ -69,8 +69,8 @@ int Robot::FollowLine(){
 	MeasureLine();
 	if(line_present == 1) {
 		dv = (int)(line_error*kp);
-		v_left = v_left_go - dv;
-		v_right = v_right_go + dv;
+		v_left = v_left_go + dv;
+		v_right = v_right_go - dv;
 		if(v_left > 65) {
 			v_left = 65;
 			v_right = 30;	
