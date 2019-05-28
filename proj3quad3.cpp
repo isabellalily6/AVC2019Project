@@ -45,9 +45,9 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 			totwhite = get_pixel(240/2, countCol,3);
 			if(totwhite > threshold - 15){
-				whiteArr[countCol] = 1;
+				whiteArr[countCol] = 0;
 			} else {
-			whiteArr[countCol] = 0;	
+			whiteArr[countCol] = 1;	
 			}
 			line_error += whiteArr[countCol] * (countCol-middleIndex);
 			
