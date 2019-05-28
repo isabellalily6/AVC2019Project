@@ -73,17 +73,16 @@ int Robot::FollowLine(){
 		v_right = v_right_go - dv;
 		if(v_left > 65) {
 			v_left = 65;
-			v_right = 30;	
+			v_right = 35;	
 		} else if(v_left < 30){
 			v_left = 30;
-			v_right = 65;	
+			v_right = 45;	
 		}
 		printf(" \nline error: %.1f dv: %d",line_error,dv);
 		
 		SetMotors();
 	} else {
-			printf(" Line missing");
-			
+			printf(" %nLine missing");			
 			v_left = 52;
 			v_right = 44;
 			sleep1(100);
