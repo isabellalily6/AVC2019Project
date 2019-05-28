@@ -13,7 +13,7 @@ class Robot{
     const int cam_height = 240;
     const int v_left_go = 52;
     const int v_right_go = 44;
-    double kp = 0.0002;
+    double kp = 0.001;
     int line_present = 1;
     public:
     //Rob(){};
