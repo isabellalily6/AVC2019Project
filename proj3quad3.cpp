@@ -11,8 +11,8 @@ class Robot{
     int quadrant;
     const int cam_width = 320;
     const int cam_height = 240;
-    const int v_left_go = 52;
-    const int v_right_go = 43;
+    const int v_left_go = 55;
+    const int v_right_go = 41;
     double kp = 0.05;
     int line_present = 1;
     public:
@@ -47,10 +47,9 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			whiteArr[countCol] = 1;	
 			}
 			line_error += whiteArr[countCol] * (countCol-middleIndex);
-			
 		}
-		
-	printf("\nwhiteness: %.1f",totwhite);
+				
+	printf("%nwhiteness: %.1f",totwhite);
 	
 	return 0;	
 } 
@@ -68,12 +67,20 @@ int Robot::FollowLine(){
 		dv = (int)(line_error*kp);
 		v_left = v_left_go - dv;
 		v_right = v_right_go + dv;
-		printf(" \nline error: %.1f dv: %d",line_error,dv);
+		if(v_left > 55) {
+		v_left = 55;
+		} 
+		if(v_right < ){
+		v_right = 41;
+		}
+		
+		printf(" %nline error: %.1f dv: %d",line_error,dv);
 		SetMotors();
+		
 	} else {
 			printf(" Line missing");
 			v_left = 55;
-			v_right = 40;
+			v_right = 41;
 			SetMotors();
 			
 	}
