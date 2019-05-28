@@ -61,7 +61,9 @@ int Robot::SetMotors(){
 	
 	 set_motors(3, v_left);
 	 set_motors(5, v_right);
+	 printf("\n v_left: %d v_right: %d",v_left,v_right);
 	 hardware_exchange();
+	 
 	 return 0; 
 
 }
@@ -84,7 +86,7 @@ int Robot::FollowLine(){
 			v_right = 30;
 			}
 		printf(" \nline error: %.1f dv: %d",line_error,dv);
-		printf("\n v_left: %d v_right: %d",v_left,v_right);
+		
 		
 		SetMotors();
 	} else {
