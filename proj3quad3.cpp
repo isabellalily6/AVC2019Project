@@ -68,6 +68,16 @@ int Robot::FollowLine(){
 		dv = (int)(line_error*kp);
 		v_left = v_left_go - dv;
 		v_right = v_right_go + dv;
+		if(v_left > 65) {
+			v_left = 65;	
+		} else if(v_left < 30){
+			v_left = 30;	
+		}
+		if(v_right < 30) {
+			v_right = 30;
+		} else if(v_right > 65){
+			v_right = 65;	
+		}
 		printf(" \nline error: %.1f dv: %d",line_error,dv);
 		SetMotors();
 	} else {
