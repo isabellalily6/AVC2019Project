@@ -11,8 +11,8 @@ class Robot{
     int quadrant;
     const int cam_width = 320;
     const int cam_height = 240;
-    const int v_left_go = 52;
-    const int v_right_go = 44;
+    const int v_left_go = 51;
+    const int v_right_go = 43;
     double kp = 0.0025;
     int line_present = 1;
     public:
@@ -72,7 +72,7 @@ int Robot::FollowLine(){
 	if(line_present == 1) {
 		dv = (int)(line_error*kp);
 		v_left = v_left_go + dv;
-		v_right = v_right_go - dv;
+		v_right = v_right_go + dv;
 		if(v_left > 65) {
 			v_left = 65;
 				
@@ -91,8 +91,8 @@ int Robot::FollowLine(){
 		SetMotors();
 	} else {
 			printf(" %nLine missing");			
-			v_left = 52;
-			v_right = 44;
+			v_left = 43;
+			v_right = 43;
 			sleep1(100);
 			SetMotors();
 			
