@@ -49,7 +49,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			line_error += whiteArr[countCol] * (countCol-middleIndex);
 		}
 				
-	printf("\nwhiteness: %.1f",totwhite);
+	printf("%nwhiteness: %.1f",totwhite);
 	
 	return 0;	
 } 
@@ -72,9 +72,10 @@ int Robot::FollowLine(){
 		} else if(v_right < 30){
 		v_right = 30;
 		}
-		if(v_right > 
-		printf(" \nline error: %.1f dv: %d",line_error,dv);
+		
+		printf(" %nline error: %.1f dv: %d",line_error,dv);
 		SetMotors();
+		
 	} else {
 			printf(" Line missing");
 			v_left = 65;
