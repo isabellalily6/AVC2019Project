@@ -39,7 +39,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	//how to get array of white pixel? use that for totwhite
 	
 	//for(int countRow = 0; countRow < 240; countRow++) {
-	int middleIndex = cam_width/2;
+	int middleIndex = (cam_width - 1)/2;
 	line_error = 0;
 		for(int countCol = 0; countCol < 320; countCol++){
 			
