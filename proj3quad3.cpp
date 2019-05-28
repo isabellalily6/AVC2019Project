@@ -31,7 +31,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float whiteArr[cam_width];
 	float errorArray[cam_width];
 	int whiteBool = 0;
-	double threshold = 30;
+	double threshold = 50;
 
 	//how to get array of white pixel? use that for totwhite
 	
@@ -47,9 +47,10 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			whiteArr[countCol] = 1;	
 			}
 			line_error += whiteArr[countCol] * (countCol-middleIndex);
+			
 		}
-				
-	printf("%nwhiteness: %.1f",totwhite);
+		
+	printf("\nwhiteness: %.1f",totwhite);
 	
 	return 0;	
 } 
@@ -67,11 +68,8 @@ int Robot::FollowLine(){
 		dv = (int)(line_error*kp);
 		v_left = v_left_go - dv;
 		v_right = v_right_go + dv;
-		
-		
-		printf(" %nline error: %.1f dv: %d",line_error,dv);
+		printf(" \nline error: %.1f dv: %d",line_error,dv);
 		SetMotors();
-		
 	} else {
 			printf(" Line missing");
 			v_left = 55;
@@ -86,6 +84,8 @@ int Robot::InitHardware(){
 	open_screen_stream();
 	take_picture();
 	update_screen();
+	v_left = v_left_go;
+	v_right = v_right_go;
 	SetMotors();
 	hardware_exchange();
 	
