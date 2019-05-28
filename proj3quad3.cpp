@@ -47,9 +47,8 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			whiteArr[countCol] = 1;	
 			}
 			line_error += whiteArr[countCol] * (countCol-middleIndex);
-			
 		}
-		
+				
 	printf("\nwhiteness: %.1f",totwhite);
 	
 	return 0;	
