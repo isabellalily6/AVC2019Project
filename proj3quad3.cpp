@@ -11,7 +11,7 @@ class Robot{
     int quadrant;
     const int cam_width = 320;
     const int cam_height = 240;
-    const int v_left_go = 55;
+    const int v_left_go = 53;
     const int v_right_go = 38;
     double kp = 0.05;
     int line_present = 1;
@@ -31,7 +31,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float whiteArr[cam_width];
 	float errorArray[cam_width];
 	int whiteBool = 0;
-	double threshold = 50;
+	double threshold = 127;
 
 	//how to get array of white pixel? use that for totwhite
 	
@@ -72,7 +72,7 @@ int Robot::FollowLine(){
 		SetMotors();
 	} else {
 			printf(" Line missing");
-			v_left = 55;
+			v_left = 53;
 			v_right = 38;
 			SetMotors();
 			
