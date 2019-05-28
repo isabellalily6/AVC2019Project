@@ -13,7 +13,7 @@ class Robot{
     const int cam_height = 240;
     const int v_left_go = 52;
     const int v_right_go = 44;
-    double kp = 0.2;
+    double kp = 0.5;
     int line_present = 1;
     public:
     //Rob(){};
@@ -69,8 +69,8 @@ int Robot::FollowLine(){
 	MeasureLine();
 	if(line_present == 1) {
 		dv = (int)(line_error*kp);
-		v_left = v_left_go + dv;
-		v_right = v_right_go - dv;
+		v_left = v_left_go - dv;
+		v_right = v_right_go + dv;
 		if(v_left > 65) {
 			v_left = 65;
 			v_right = 30;	
@@ -79,7 +79,7 @@ int Robot::FollowLine(){
 			v_right = 65;	
 		}
 		printf(" \nline error: %.1f dv: %d",line_error,dv);
-		c
+		
 		SetMotors();
 	} else {
 			printf(" Line missing");
