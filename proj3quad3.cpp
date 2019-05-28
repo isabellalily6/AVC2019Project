@@ -44,7 +44,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 		for(int countCol = 0; countCol < 320; countCol++){
 			
 			totwhite = get_pixel(240/2, countCol,3);
-			if(totwhite > threshold){
+			if(totwhite > threshold - 15){
 				whiteArr[countCol] = 1;
 			} else {
 			whiteArr[countCol] = 0;	
