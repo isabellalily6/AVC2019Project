@@ -13,7 +13,7 @@ class Robot{
     const int cam_height = 240;
     const int v_left_go = 51;
     const int v_right_go = 38;
-    double kp = 0.05;
+    double kp = 0.2;
     int line_present = 1;
     public:
     //Rob(){};
@@ -31,8 +31,11 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float whiteArr[cam_width];
 	float errorArray[cam_width];
 	int whiteBool = 0;
-	double threshold = 127;
-
+	double threshold = 0;
+	for(int i = 0; i < cam_width; i++){
+		threshold += get_pixel(120,i,3);
+	}
+	threshold /= cam_width;
 	//how to get array of white pixel? use that for totwhite
 	
 	//for(int countRow = 0; countRow < 240; countRow++) {
