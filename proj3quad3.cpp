@@ -7,12 +7,12 @@ class Robot{
 	private:
 	int v_left, v_right, cam_tilt;
     int dv;
-    double line_error = 0;
+    double line_error =0;
     int quadrant;
     const int cam_width = 320;
     const int cam_height = 240;
-    const int v_left_go = 55;
-    const int v_right_go = 41;
+    const int v_left_go = 52;
+    const int v_right_go = 43;
     double kp = 0.05;
     int line_present = 1;
     public:
@@ -47,9 +47,10 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			whiteArr[countCol] = 1;	
 			}
 			line_error += whiteArr[countCol] * (countCol-middleIndex);
+			
 		}
-				
-	printf("%nwhiteness: %.1f",totwhite);
+		
+	printf("\nwhiteness: %.1f",totwhite);
 	
 	return 0;	
 } 
@@ -67,20 +68,12 @@ int Robot::FollowLine(){
 		dv = (int)(line_error*kp);
 		v_left = v_left_go - dv;
 		v_right = v_right_go + dv;
-		if(v_left > 55) {
-		v_left = v_left_go;
-		} 
-		if(v_right < 41){
-		v_right = v_right_go;
-		}
-		
-		printf(" %nline error: %.1f dv: %d",line_error,dv);
+		printf(" \nline error: %.1f dv: %d",line_error,dv);
 		SetMotors();
-		
 	} else {
 			printf(" Line missing");
-			v_left = v_left_go;
-			v_right = v_right_go;
+			v_left = 55;
+			v_right = 40;
 			SetMotors();
 			
 	}
@@ -91,8 +84,6 @@ int Robot::InitHardware(){
 	open_screen_stream();
 	take_picture();
 	update_screen();
-	v_left = v_left_go;
-	v_right = v_right_go;
 	SetMotors();
 	hardware_exchange();
 	
