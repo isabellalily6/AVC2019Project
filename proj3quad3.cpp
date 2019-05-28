@@ -7,7 +7,7 @@ class Robot{
 	private:
 	int v_left, v_right, cam_tilt;
     int dv;
-    double line_error =0;
+    double line_error = 0;
     int quadrant;
     const int cam_width = 320;
     const int cam_height = 240;
