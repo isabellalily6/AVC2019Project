@@ -68,10 +68,10 @@ int Robot::FollowLine(){
 		v_left = v_left_go - dv;
 		v_right = v_right_go + dv;
 		if(v_left > 55) {
-		v_left = 55;
+		v_left = v_left_go;
 		} 
 		if(v_right < 41){
-		v_right = 41;
+		v_right = v_right_go;
 		}
 		
 		printf(" %nline error: %.1f dv: %d",line_error,dv);
@@ -91,6 +91,8 @@ int Robot::InitHardware(){
 	open_screen_stream();
 	take_picture();
 	update_screen();
+	v_left = v_left_go;
+	v_right = v_right_go;
 	SetMotors();
 	hardware_exchange();
 	
