@@ -86,7 +86,7 @@ int Robot::SetMotors(){
 int Robot::FollowLine(){
 	MeasureLine();
 	if(line_present == 1) {
-		err = (int)(line_error*kp);
+		//err = (int)(line_error*kp);
 		
 		
 		v_left = v_left_go + err;
