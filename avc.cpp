@@ -44,7 +44,7 @@ void Robot::openGate(){
 	send_to_server(password);
 	v_left = 65;
 	v_right = 30;
-	sleep1(100);
+	sleep1(5000);
 	quadrant = 2;
 	v_left = 51;
 	v_right = 43;
