@@ -18,6 +18,7 @@ class Robot{
     const int v_right_go = 43;
     double kp = 0.0004;
     double kd = 0.0002;
+    double err;
     int line_present = 1;
     int prev_error;
     public:
