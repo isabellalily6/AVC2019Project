@@ -5,37 +5,53 @@
 
 //og size 240,320
 //camera has a 6:8 ratio
+//todo add line present thingy
 class Robot{
 	private:
 	int v_left, v_right, cam_tilt;
     int dv;
     double line_error =0;
-    int quadrant;
+    int quadrant = 1;
     const int cam_width = 320;
     const int cam_height = 240;
     const int v_left_go = 51;
     const int v_right_go = 43;
-    double kp = 0.0004;
-    double kd = 0.0002;
+    double kp = 0.0003;
+    double kd = 0.0001;
+    double err;
     int line_present = 1;
     int prev_error;
     public:
     //Rob(){};
 	int InitHardware();
-	void ReadSetMotors();
+	int turnAround();
 	int SetMotors();
 	int MeasureLine();
 	int FollowLine();
-	
+	void openGate();
+	//void turnRight();
+	//void turnLeft();
 		
 };
+void Robot::openGate(){
+	char server_addr[15] = {'1', '3', '0', '.', '1', '9', '5', '.', '6', '.', '1', '9', '6'};
+	char message[24] = {'P', 'l', 'e', 'a', 's', 'e'};
+	char password[24];
+	int port  = 1024;
+	connect_to_server(server_addr, port);
+	send_to_server(message);
+	receive_from_server(password);
+	send_to_server(password);
+}
 
 int Robot::MeasureLine(){ //only coded for quad 2 rn
+	if(quadrant == 2) {
 	float totwhite = 0;	
 	float whiteArr[cam_width];
 	float errorArray[cam_width];
 	int whiteBool = 0;
 	double threshold = 0;
+	line_present = 1;
 	
 	for(int i = 0; i < cam_width; i++){
 		threshold += get_pixel(120,i,3);
@@ -46,23 +62,26 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	//for(int countRow = 0; countRow < 240; countRow++) {
 	int middleIndex = (cam_width - 1)/2;
 	line_error = 0;
+	struct timespec ts_start;
+	struct timespec ts_end;
+	clock_gettime(CLOCK_MONOTONIC, &ts_start);
 		for(int countCol = 0; countCol < 320; countCol++){
 			
 			totwhite = get_pixel(240/2, countCol,3);
-			if(totwhite > threshold - 15){
+			if(totwhite > threshold - 25){
 				whiteArr[countCol] = 0;
 			} else {
 			whiteArr[countCol] = 1;	
 			}
 			line_error += whiteArr[countCol] * (countCol-middleIndex);
 			}
+			clock_gettime(CLOCK_MONOTONIC, &ts_end);
+			long dt = (ts_end.tv_sec-ts_start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
 			prev_error = line_error;
-			err = (int)(line_error*kp) + (int)(((line_error - prev_error) * kd)/dt);
-			
-			
-		
-		
-	printf("\nwhiteness: %.1f",totwhite);
+			err = (int)((line_error*kp) + ((line_error - prev_error) * kd/dt));
+					
+		    printf("\nwhiteness: %.1f",totwhite);
+		}
 	
 	return 0;	
 } 
@@ -79,7 +98,7 @@ int Robot::SetMotors(){
 int Robot::FollowLine(){
 	MeasureLine();
 	if(line_present == 1) {
-		err = (int)(line_error*kp);
+		//err = (int)(line_error*kp);
 		
 		
 		v_left = v_left_go + err;
@@ -101,12 +120,24 @@ int Robot::FollowLine(){
 		
 		SetMotors();
 	} else {
-			printf(" %nLine missing");			
-			v_left = 43;
-			v_right = 43;
+			printf("%nLine missing");			
+			turnAround();
 			sleep1(100);
 			SetMotors();
 			
+	}
+	return 0;
+}
+int Robot::turnAround() {
+	if (v_left > 48){
+		v_left = 48 - (v_left-48);
+	} else {
+		v_left = 48 + (48 - v_left);
+	}
+	if (v_right > 48){
+		v_right = 48 - (v_right-48);
+	} else {
+		v_right = 48 + (48 - v_right);
 	}
 	return 0;
 }
@@ -126,6 +157,9 @@ int main() {
 	int courseOver = 0;
 	Robot robot;
 	robot.InitHardware();
+	robot.openGate();
+	quadrant = 2;
+	
 	while(true){
 		//robot.MeasureLine();
 		robot.FollowLine();
@@ -139,4 +173,4 @@ int main() {
 		close_screen_stream();
 		//stoph();
 		return 0;
-}
+} 
