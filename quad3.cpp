@@ -20,6 +20,7 @@ class Robot{
     double kd = 0.0002;
     int line_present = 1;
     int prev_error;
+    float err;
     public:
     //Rob(){};
 	int InitHardware();
