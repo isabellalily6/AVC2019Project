@@ -5,6 +5,7 @@
 
 //og size 240,320
 //camera has a 6:8 ratio
+//todo add line present thingy
 class Robot{
 	private:
 	int v_left, v_right, cam_tilt;
@@ -22,7 +23,7 @@ class Robot{
     public:
     //Rob(){};
 	int InitHardware();
-	void ReadSetMotors();
+	void turnAround();
 	int SetMotors();
 	int MeasureLine();
 	int FollowLine();
@@ -36,6 +37,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float errorArray[cam_width];
 	int whiteBool = 0;
 	double threshold = 0;
+	line_present = 1;
 	
 	for(int i = 0; i < cam_width; i++){
 		threshold += get_pixel(120,i,3);
@@ -63,11 +65,8 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			long dt = ts_end.tv_sec-ts_Start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
 			prev_error = line_error;
 			err = (int)(line_error*kp) + (int)(((line_error - prev_error) * kd)/dt);
-			
-			
-		
-		
-	printf("\nwhiteness: %.1f",totwhite);
+					
+		    printf("\nwhiteness: %.1f",totwhite);
 	
 	return 0;	
 } 
@@ -106,14 +105,25 @@ int Robot::FollowLine(){
 		
 		SetMotors();
 	} else {
-			printf(" %nLine missing");			
-			v_left = 43;
-			v_right = 43;
+			printf("%nLine missing");			
+			turnAround();
 			sleep1(100);
 			SetMotors();
 			
 	}
 	return 0;
+}
+int Robot::turnAround() {
+	if (v_left > 48){
+		v_left = 48 - (v_left-48);
+	} else {
+		v_left = 48 + (48 - v_left);
+	}
+	if (v_right > 48){
+		v_right = 48 - (v_right-48);
+	} else {
+		v_right = 48 + (48 - v_right);
+	}
 }
 int Robot::InitHardware(){
 	init(0);
