@@ -46,6 +46,9 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	//for(int countRow = 0; countRow < 240; countRow++) {
 	int middleIndex = (cam_width - 1)/2;
 	line_error = 0;
+	struct timespec ts_start;
+	struct timespec ts_end;
+	clock_gettime(CLOCK_MONOTONIC, &ts_start);
 		for(int countCol = 0; countCol < 320; countCol++){
 			
 			totwhite = get_pixel(240/2, countCol,3);
@@ -56,6 +59,8 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			}
 			line_error += whiteArr[countCol] * (countCol-middleIndex);
 			}
+			clock_gettime(CLOCK_MONOTONIC, &ts_end);
+			long dt = ts_end.tv_sec-ts_Start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
 			prev_error = line_error;
 			err = (int)(line_error*kp) + (int)(((line_error - prev_error) * kd)/dt);
 			
@@ -126,6 +131,7 @@ int main() {
 	int courseOver = 0;
 	Robot robot;
 	robot.InitHardware();
+	
 	while(true){
 		//robot.MeasureLine();
 		robot.FollowLine();
