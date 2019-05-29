@@ -28,6 +28,8 @@ class Robot{
 	int SetMotors();
 	int MeasureLine();
 	int FollowLine();
+	void turnRight();
+	void turnLeft();
 	
 		
 };
