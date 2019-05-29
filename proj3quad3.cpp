@@ -24,12 +24,12 @@ class Robot{
     public:
     //Rob(){};
 	int InitHardware();
-	void turnAround();
+	int turnAround();
 	int SetMotors();
 	int MeasureLine();
 	int FollowLine();
-	void turnRight();
-	void turnLeft();
+	//void turnRight();
+	//void turnLeft();
 	
 		
 };
@@ -65,7 +65,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			line_error += whiteArr[countCol] * (countCol-middleIndex);
 			}
 			clock_gettime(CLOCK_MONOTONIC, &ts_end);
-			long dt = ts_end.tv_sec-ts_Start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
+			long dt = ts_end.tv_sec-ts_start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
 			prev_error = line_error;
 			err = (int)(line_error*kp) + (int)(((line_error - prev_error) * kd)/dt);
 					
@@ -127,6 +127,7 @@ int Robot::turnAround() {
 	} else {
 		v_right = 48 + (48 - v_right);
 	}
+	return 0;
 }
 int Robot::InitHardware(){
 	init(0);
