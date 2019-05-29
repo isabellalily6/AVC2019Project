@@ -16,7 +16,7 @@ class Robot{
     const int cam_height = 240;
     const int v_left_go = 51;
     const int v_right_go = 43;
-    double kp = 0.0008;
+    double kp = 0.001;
     double kd = 0.0000;
     double err;
     int line_present = 1;
