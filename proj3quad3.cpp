@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <time.h>
+#include <sys/time.h>
 #include "E101.h"
+
 //og size 240,320
 //camera has a 6:8 ratio
 class Robot{
@@ -13,8 +15,10 @@ class Robot{
     const int cam_height = 240;
     const int v_left_go = 51;
     const int v_right_go = 43;
-    double kp = 0.0001;
+    double kp = 0.0004;
+    double kd = 0.0002;
     int line_present = 1;
+    int prev_error;
     public:
     //Rob(){};
 	int InitHardware();
@@ -32,6 +36,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float errorArray[cam_width];
 	int whiteBool = 0;
 	double threshold = 0;
+	
 	for(int i = 0; i < cam_width; i++){
 		threshold += get_pixel(120,i,3);
 	}
@@ -50,8 +55,12 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			whiteArr[countCol] = 1;	
 			}
 			line_error += whiteArr[countCol] * (countCol-middleIndex);
+			}
+			prev_error = line_error;
+			err = (int)(line_error*kp) + (int)(((line_error - prev_error) * kd)/dt);
 			
-		}
+			
+		
 		
 	printf("\nwhiteness: %.1f",totwhite);
 	
@@ -70,9 +79,11 @@ int Robot::SetMotors(){
 int Robot::FollowLine(){
 	MeasureLine();
 	if(line_present == 1) {
-		dv = (int)(line_error*kp);
-		v_left = v_left_go + dv;
-		v_right = v_right_go + dv;
+		err = (int)(line_error*kp);
+		
+		
+		v_left = v_left_go + err;
+		v_right = v_right_go + err;
 		if(v_left > 65) {
 			v_left = 65;
 				
@@ -85,7 +96,7 @@ int Robot::FollowLine(){
 		} else if(v_right < 30) {
 			v_right = 30;
 			}
-		printf(" \nline error: %.1f dv: %d",line_error,dv);
+		printf(" \nline error: %.1f err: %d",line_error,err);
 		
 		
 		SetMotors();
