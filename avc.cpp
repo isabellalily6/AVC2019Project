@@ -42,6 +42,7 @@ void Robot::openGate(){
 	send_to_server(message);
 	receive_from_server(password);
 	send_to_server(password);
+	quadrant = 2;
 }
 
 int Robot::MeasureLine(){ //only coded for quad 2 rn
@@ -158,7 +159,7 @@ int main() {
 	Robot robot;
 	robot.InitHardware();
 	robot.openGate();
-	quadrant = 2;
+	
 	
 	while(true){
 		//robot.MeasureLine();
