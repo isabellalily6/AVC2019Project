@@ -23,10 +23,11 @@ class Robot{
     int prev_error;
     int turnLeftBool = 0;
     int turnRightBool = 0;
+    int reverseBool = 0;
     public:
     //Rob(){};
 	int InitHardware();
-	int turnAround();
+	int reverse();
 	int SetMotors();
 	int MeasureLine();
 	int FollowLine();
@@ -44,7 +45,7 @@ void Robot::openGate(){
 	send_to_server(message);
 	receive_from_server(password);
 	send_to_server(password);
-	v_left = 65;
+	v_left = 64;
 	v_right = 30;
 	SetMotors();
 	sleep1(2000);
@@ -75,6 +76,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	//for(int countRow = 0; countRow < 240; countRow++) {
 	int middleIndex = (cam_width - 1)/2;
 	line_error = 0;
+	int lineCount = 0;
 	struct timespec ts_start;
 	struct timespec ts_end;
 	clock_gettime(CLOCK_MONOTONIC, &ts_start);
@@ -91,12 +93,20 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			whiteArr[countCol] = 1;	
 			}
 			line_error += whiteArr[countCol] * (countCol-middleIndex);
+			lineCount += whiteArr[countCol];
 			}
+			
+			if(countCol > 310) { 
+					reverseBool = 1;
+					break;
+			}
+				
+			
 			clock_gettime(CLOCK_MONOTONIC, &ts_end);
 			long dt = (ts_end.tv_sec-ts_start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
-			prev_error = line_error;
+			
 			err = ((line_error*kp) + (((line_error - prev_error) * kd)/dt));
-					
+			prev_error = line_error;		
 		    printf("\nwhiteness: %.1f",totwhite);
 		    	totredavg /= cam_width;
 				totblueavg /= cam_width;
@@ -155,8 +165,8 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				long dt = (ts_end.tv_sec-ts_start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
 				prev_error = line_error;
 				err = (int)((line_error*kp) + ((line_error - prev_error) * kd/dt));
-				printf("\nline3: %d lineTurn %f middleIndex: %d",line3,lineTurn,middleIndex);
-			if(line3 == 0) {
+				printf("\nline3: %d lineTurn %.3f middleIndex: %d",line3,lineTurn,middleIndex);
+			if(line3 < 10) {
 				turnLeftBool =1;
 				printf("\nline3 is 0");
 							
@@ -165,7 +175,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			} else if (lineTurn < 0) {
 				turnLeftBool =1;
 			}						
-				printf("\nwhiteness: %.1f red: %.1f blue: %.1f",totwhite);	
+				printf("\n%d: Whiteness: %.1f red: %.1f blue: %.1f",quadrant,totwhite,totredavg,totblueavg);	
 					
 			if (totredavg - totblueavg > 130){
 				quadrant - 3;
@@ -183,7 +193,7 @@ int Robot::SetMotors(){
 	
 	 set_motors(3, v_left);
 	 set_motors(5, v_right);
-	 printf("\n v_left: %d v_right: %d",v_left,v_right);
+	 printf("\nSet Motors: v_left: %d v_right: %d",v_left,v_right);
 	 hardware_exchange();
 	 
 	 return 0; 
@@ -195,6 +205,9 @@ int Robot::FollowLine(){
 		//err = (int)(line_error*kp);
 		
 		if(quadrant == 2) {
+			if(reverseBool == 1){ 
+					reverse();
+			}			
 		v_left = v_left_go + err;
 		v_right = v_right_go + err;
 		if(v_left > 65) {
@@ -249,7 +262,7 @@ int Robot::FollowLine(){
 	}
 	return 0;
 }
-int Robot::turnAround() {
+int Robot::reverse() {
 	if (v_left > 48){
 		v_left = 48 - (v_left-48);
 	} else {
@@ -260,6 +273,8 @@ int Robot::turnAround() {
 	} else {
 		v_right = 48 + (48 - v_right);
 	}
+	SetMotors();
+	sleep1(50);
 	
 	return 0;
 }
