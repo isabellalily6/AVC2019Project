@@ -95,7 +95,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				totredavg += get_pixel(cam_height/2, i,0);
 				totblueavg += get_pixel(cam_height/2, i,2);
 				} 
-				if (totred/cam_width > totblue/cam_width){
+				if (totredavg/cam_width > totblueavg/cam_width){
 				quadrant++;
 				printf("\n Next Quadrant now at quad: %d",quadrant);
 			}  
