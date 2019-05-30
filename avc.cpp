@@ -99,6 +99,9 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				printf("\n red: %.3f blue: %.3f",totredavg, totblueavg);
 				if (totredavg > totblueavg + 50 && totredavg > 230){
 				quadrant++;
+				v_left = v_left_go;
+				v_right = v_right_go;
+				SetMotors();
 				printf("\n Next Quadrant now at quad: %d",quadrant);
 			}  
 		}
