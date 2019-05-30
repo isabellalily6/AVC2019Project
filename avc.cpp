@@ -14,8 +14,8 @@ class Robot{
     int quadrant = 1;
     const int cam_width = 320;
     const int cam_height = 240;
-    const int v_left_go = 48; //48 is 0 spd, higher goes fwd
-    const int v_right_go = 48; //lower is faster
+    const int v_left_go = 51;
+    const int v_right_go = 46;
     double kp = 0.0002;
     double kd = 0.0003;
     double err;
@@ -52,7 +52,7 @@ void Robot::openGate(){
 }
 
 int Robot::MeasureLine(){ //only coded for quad 2 rn
-	if(quadrant == 2) {
+	
 	float totwhite = 0;	
 	float totredavg = 0;
 	float totblueavg =0;
@@ -62,6 +62,8 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	double threshold = 0;
 	line_present = 1;
 	
+	
+	if(quadrant == 2) {
 	for(int i = 0; i < cam_width; i++){
 		threshold += get_pixel(120,i,3);
 	}
@@ -97,7 +99,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 		    	totredavg /= cam_width;
 				totblueavg /= cam_width;
 				printf("\n red: %.3f blue: %.3f",totredavg, totblueavg);
-				if (totredavg - totblueavg > 140){
+				if (totredavg - totblueavg > 130){
 				quadrant++;
 				v_left = v_left_go;
 				v_right = v_right_go;
@@ -105,6 +107,62 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				printf("\n Next Quadrant now at quad: %d",quadrant);
 			}  
 		}
+		
+		
+		if(quadrant == 3) {
+			
+			
+			double lineTurn = 0; //0 is left 1 is right
+			int line3 = 0;
+			int middleIndex = (cam_width - 1)/2;
+			line_error = 0;
+			struct timespec ts_start;
+			struct timespec ts_end;
+			clock_gettime(CLOCK_MONOTONIC, &ts_start);
+			
+			for(int countCol = 0; countCol < 320; countCol++){
+			
+				totwhite = get_pixel(240/2, countCol,3);
+				if(totwhite > threshold){
+					whiteArr[countCol] = 0;
+				} else {
+					whiteArr[countCol] = 1;	
+				}
+				line_error += whiteArr[countCol] * (countCol-middleIndex);
+				line3 += whiteArr[countCol];
+				if(whiteArr[countCol] == 1){
+					lineTurn += countCol - middleIndex; //to count the pos of the line - l or r ?
+			    }
+				
+				/* make a detection for a right hand turn
+				 * if(whiteArr[countCol] == 1){
+					lineTurn = countCol;
+				} */
+			}
+			lineTurn = lineTurn/cam_width; // avg line pos 			
+				
+				clock_gettime(CLOCK_MONOTONIC, &ts_end);
+				long dt = (ts_end.tv_sec-ts_start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
+				prev_error = line_error;
+				err = (int)((line_error*kp) + ((line_error - prev_error) * kd/dt));
+			if(line3 == 0) {
+				turnLeft();				
+			} else if (lineTurn > 0) {
+				turnRight();
+			} else if (lineTurn < 0) {
+				turnLeft();
+			}						
+				printf("\nwhiteness: %.1f red: %.1f blue: %.1f",totwhite);	
+					
+			for(int i = 0; i < cam_width; i++){
+				
+				totredavg += get_pixel(240/2, countCol,0);
+				totblueavg += get_pixel(240/2, countCol,2);
+				} 
+			if (totred/cam_width > totblue/cam_width+30){
+				quadrant++;
+				printf("\n Next Quadrant now at quad: %d",quadrant);
+			}
 	
 	return 0;	
 } 
