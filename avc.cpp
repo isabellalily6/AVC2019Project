@@ -163,6 +163,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				quadrant++;
 				printf("\n Next Quadrant now at quad: %d",quadrant);
 			}
+		}
 	
 	return 0;	
 } 
