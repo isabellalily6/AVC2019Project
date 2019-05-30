@@ -156,15 +156,17 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					lineTurn = countCol;
 				} */
 			}
+			printf("\n\nline turn before avging"); //debug purpose
 			
 			totredavg /= cam_width;
 			totblueavg /= cam_width;
-			lineTurn = lineTurn/cam_width; // avg line pos 			
+			lineTurn = lineTurn/cam_width; // avg line pos - maybe this shouldnt be avged?			
 				
 				clock_gettime(CLOCK_MONOTONIC, &ts_end);
 				long dt = (ts_end.tv_sec-ts_start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
-				prev_error = line_error;
+				
 				err = (int)((line_error*kp) + ((line_error - prev_error) * kd/dt));
+				prev_error = line_error;
 				printf("\nline3: %d lineTurn %.3f middleIndex: %d",line3,lineTurn,middleIndex);
 			if(line3 > 310) { //crossroad sensor
 				turnLeftBool =1;
