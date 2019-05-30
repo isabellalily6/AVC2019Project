@@ -15,9 +15,9 @@ class Robot{
     const int cam_width = 320;
     const int cam_height = 240;
     const int v_left_go = 51;
-    const int v_right_go = 45;
+    const int v_right_go = 46;
     double kp = 0.0002;
-    double kd = 0.0004;
+    double kd = 0.0003;
     double err;
     int line_present = 1;
     int prev_error;
@@ -47,7 +47,7 @@ void Robot::openGate(){
 	SetMotors();
 	sleep1(5000);
 	quadrant = 2;
-	v_left = 50;
+	v_left = 51;
 	v_right = 46;
 }
 
@@ -114,15 +114,14 @@ int Robot::FollowLine(){
 			v_left = 65;
 				
 		} else if(v_left < 30){
-			v_left = 30;
-				
+			v_left = 30;				
 		}
 		if(v_right > 65){
 				v_right = 65;
 		} else if(v_right < 30) {
 			v_right = 30;
 			}
-		printf(" \nline error: %.1f err: %d",line_error,err);
+		printf(" \nline error: %.1f err: %.3f",line_error,err);
 		
 		
 		SetMotors();
