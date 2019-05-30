@@ -88,6 +88,15 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			err = ((line_error*kp) + (((line_error - prev_error) * kd)/dt));
 					
 		    printf("\nwhiteness: %.1f",totwhite);
+		    for(int i = 0; i < cam_width; i++){
+				
+				totredavg += get_pixel(240/2, countCol,0);
+				totblueavg += get_pixel(240/2, countCol,2);
+				} 
+				if (totred/cam_width > totblue/cam_width+30){
+				quadrant++;
+				printf("\n Next Quadrant now at quad: %d",quadrant);
+			}  
 		}
 	
 	return 0;	
