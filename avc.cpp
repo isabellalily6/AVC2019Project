@@ -113,7 +113,8 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 		}
 		
 		
-		if(quadrant == 3) {			
+		if(quadrant == 3) {	
+			printf("\ncurrent quadrant %d",quadrant);		
 			
 			double lineTurn = 0; //0 is left 1 is right
 			int line3 = 0;
@@ -208,6 +209,7 @@ int Robot::FollowLine(){
 		
 		SetMotors();
 	} else if(quadrant == 3){
+		printf("\ncurrent quadrant %d",quadrant);
 		if(turnLeftBool == 1) {
 		turnLeft();
 		turnLeftBool = 0;
