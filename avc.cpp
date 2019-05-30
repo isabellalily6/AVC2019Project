@@ -14,8 +14,8 @@ class Robot{
     int quadrant = 1;
     const int cam_width = 320;
     const int cam_height = 240;
-    const int v_left_go = 51;
-    const int v_right_go = 46;
+    const int v_left_go = 48; //48 is 0 spd, higher goes fwd
+    const int v_right_go = 48; //lower is faster
     double kp = 0.0002;
     double kd = 0.0003;
     double err;
