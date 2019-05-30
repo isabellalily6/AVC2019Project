@@ -44,7 +44,7 @@ void Robot::openGate(){
 	send_to_server(password);
 	v_left = 65;
 	v_right = 30;
-	setMotors();
+	SetMotors();
 	sleep1(5000);
 	quadrant = 2;
 	v_left = 50;
