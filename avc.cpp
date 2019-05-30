@@ -76,7 +76,11 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	clock_gettime(CLOCK_MONOTONIC, &ts_start);
 		for(int countCol = 0; countCol < 320; countCol++){
 			
-			totwhite = get_pixel(240/2, countCol,3);
+			totwhite = get_pixel(240/2, countCol,3); //for err line 
+			
+			totredavg += get_pixel(cam_height/2, countCol,0); //for red sensor
+			totblueavg += get_pixel(cam_height/2, countCol,2);
+			
 			if(totwhite > threshold){
 				whiteArr[countCol] = 0;
 			} else {
@@ -90,16 +94,10 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			err = ((line_error*kp) + (((line_error - prev_error) * kd)/dt));
 					
 		    printf("\nwhiteness: %.1f",totwhite);
-		    for(int i = 0; i < cam_width; i++){
-				
-				totredavg += get_pixel(cam_height/2, i,0);
-				totblueavg += get_pixel(cam_height/2, i,2);
-				
-				} 
-				totredavg /= cam_width;
+		    	totredavg /= cam_width;
 				totblueavg /= cam_width;
 				printf("\n red: %.3f blue: %.3f",totredavg, totblueavg);
-				if (totredavg > totblueavg){
+				if (totredavg > totblueavg+35){
 				quadrant++;
 				printf("\n Next Quadrant now at quad: %d",quadrant);
 			}  
