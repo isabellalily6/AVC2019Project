@@ -110,10 +110,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				printf("\n Threshold: %f", threshold);
 				return 0;
 			}  
-		}
-		
-		
-		if(quadrant == 3) {	
+		} else if(quadrant == 3) {	
 			printf("\ncurrent quadrant %d",quadrant);		
 			
 			double lineTurn = 0; //0 is left 1 is right
@@ -164,7 +161,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				printf("\nwhiteness: %.1f red: %.1f blue: %.1f",totwhite);	
 					
 			if (totredavg - totblueavg > 130){
-				quadrant++;
+				quadrant - 3;
 				v_left = v_left_go;
 				v_right = v_right_go;
 				SetMotors();
