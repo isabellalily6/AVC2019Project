@@ -15,7 +15,7 @@ class Robot{
     const int cam_width = 320;
     const int cam_height = 240;
     const int v_left_go = 52;
-    const int v_right_go = 48;
+    const int v_right_go = 44;
     double kp = 0.0002;
     double kd = 0.001;
     double err;
@@ -42,8 +42,9 @@ void Robot::openGate(){
 	send_to_server(message);
 	receive_from_server(password);
 	send_to_server(password);
-	v_left = 61;
+	v_left = 65;
 	v_right = 30;
+	setMotors();
 	sleep1(5000);
 	quadrant = 2;
 	v_left = 50;
