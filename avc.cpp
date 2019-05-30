@@ -29,8 +29,8 @@ class Robot{
 	int MeasureLine();
 	int FollowLine();
 	void openGate();
-	//void turnRight();
-	//void turnLeft();
+	void turnRight();
+	void turnLeft();
 		
 };
 void Robot::openGate(){
