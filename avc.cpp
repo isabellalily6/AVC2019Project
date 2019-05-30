@@ -21,6 +21,8 @@ class Robot{
     double err;
     int line_present = 1;
     int prev_error;
+    int turnLeftBool = 0;
+    int turnRightBool = 0;
     public:
     //Rob(){};
 	int InitHardware();
@@ -150,11 +152,12 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				prev_error = line_error;
 				err = (int)((line_error*kp) + ((line_error - prev_error) * kd/dt));
 			if(line3 == 0) {
-				turnLeft();				
+				turnLeftBool =1;
+							
 			} else if (lineTurn > 0) {
-				turnRight();
+				turnRightBool();
 			} else if (lineTurn < 0) {
-				turnLeft();
+				turnLeftBool =1;
 			}						
 				printf("\nwhiteness: %.1f red: %.1f blue: %.1f",totwhite);	
 					
@@ -184,7 +187,7 @@ int Robot::FollowLine(){
 	if(line_present == 1) {
 		//err = (int)(line_error*kp);
 		
-		
+		if(quadrant == 2) {
 		v_left = v_left_go + err;
 		v_right = v_right_go + err;
 		if(v_left > 65) {
@@ -202,13 +205,36 @@ int Robot::FollowLine(){
 		
 		
 		SetMotors();
-	} else {
-			printf("%nLine missing");			
-			turnAround();
-			sleep1(100);
-			SetMotors();
-			
-	}
+	} else if(quadrant == 3){
+		if(leftBoolTurn == 1) {
+		turnLeft();
+		leftBoolTurn = 0;
+		sleep1(100);	
+		} else if(leftBoolTurn == 2) {
+		turnRight();
+		turnRightBool = 0;	
+		sleep1(100);
+		}
+		else {
+			v_left = v_left_go + err;
+		v_right = v_right_go + err;
+		if(v_left > 65) {
+			v_left = 65;
+				
+		} else if(v_left < 30){
+			v_left = 30;				
+		}
+		if(v_right > 65){
+				v_right = 65;
+		} else if(v_right < 30) {
+			v_right = 30;
+			}
+		printf(" \nline error: %.1f err: %.3f",line_error,err);
+		
+		
+		SetMotors();
+		}
+	} 
 	return 0;
 }
 int Robot::turnAround() {
