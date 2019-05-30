@@ -155,7 +155,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				long dt = (ts_end.tv_sec-ts_start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
 				prev_error = line_error;
 				err = (int)((line_error*kp) + ((line_error - prev_error) * kd/dt));
-				printf("line3: %d lineTurn %f",line3,lineTurn);
+				printf("\nline3: %d lineTurn %f middleIndex: %d",line3,lineTurn,middleIndex);
 			if(line3 == 0) {
 				turnLeftBool =1;
 				printf("\nline3 is 0");
