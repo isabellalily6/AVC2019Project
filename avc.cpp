@@ -121,8 +121,12 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			clock_gettime(CLOCK_MONOTONIC, &ts_start);
 			
 			for(int countCol = 0; countCol < 320; countCol++){
+											
+				totwhite = get_pixel(240/2, countCol,3); //for err line 
 			
-				totwhite = get_pixel(240/2, countCol,3);
+				totredavg += get_pixel(cam_height/2, countCol,0); //for red sensor
+				totblueavg += get_pixel(cam_height/2, countCol,2);
+				
 				if(totwhite > threshold){
 					whiteArr[countCol] = 0;
 				} else {
@@ -154,13 +158,11 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			}						
 				printf("\nwhiteness: %.1f red: %.1f blue: %.1f",totwhite);	
 					
-			for(int i = 0; i < cam_width; i++){
-				
-				totredavg += get_pixel(240/2, countCol,0);
-				totblueavg += get_pixel(240/2, countCol,2);
-				} 
-			if (totred/cam_width > totblue/cam_width+30){
+			if (totredavg - totblueavg > 130){
 				quadrant++;
+				v_left = v_left_go;
+				v_right = v_right_go;
+				SetMotors();
 				printf("\n Next Quadrant now at quad: %d",quadrant);
 			}
 		}
@@ -222,6 +224,22 @@ int Robot::turnAround() {
 	}
 	
 	return 0;
+}
+void Robot::turnLeft() {
+		set_motors(5, 48);
+		set_motors(3, 52);
+		sleep1(600);
+		set_motors(5, v_right_go);
+		set_motors(3, v_left_go);
+		
+}
+void Robot::turnRight() {
+		set_motors(5, v_right_go);
+		set_motors(3, v_left_go);
+		sleep1(600);
+		set_motors(5, v_right_go);
+		set_motors(3, v_left_go);
+		
 }
 int Robot::InitHardware(){
 	init(0);
