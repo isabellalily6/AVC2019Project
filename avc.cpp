@@ -42,7 +42,7 @@ void Robot::openGate(){
 	send_to_server(message);
 	receive_from_server(password);
 	send_to_server(password);
-	v_left = 65;
+	v_left = 61;
 	v_right = 30;
 	sleep1(5000);
 	quadrant = 2;
@@ -145,6 +145,7 @@ int Robot::turnAround() {
 	} else {
 		v_right = 48 + (48 - v_right);
 	}
+	
 	return 0;
 }
 int Robot::InitHardware(){
