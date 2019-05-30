@@ -14,8 +14,8 @@ class Robot{
     int quadrant = 1;
     const int cam_width = 320;
     const int cam_height = 240;
-    const int v_left_go = 53;
-    const int v_right_go = 43;
+    const int v_left_go = 50;
+    const int v_right_go = 46;
     double kp = 0.0002;
     double kd = 0.001;
     double err;
@@ -46,8 +46,8 @@ void Robot::openGate(){
 	v_right = 30;
 	sleep1(5000);
 	quadrant = 2;
-	v_left = 53;
-	v_right = 43;
+	v_left = 50;
+	v_right = 46;
 }
 
 int Robot::MeasureLine(){ //only coded for quad 2 rn
