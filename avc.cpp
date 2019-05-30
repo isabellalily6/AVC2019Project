@@ -16,7 +16,7 @@ class Robot{
     const int cam_height = 240;
     const int v_left_go = 51;
     const int v_right_go = 46;
-    double kp = 0.0002;
+    double kp = 0.0003;
     double kd = 0.0003;
     double err;
     int line_present = 1;
@@ -215,7 +215,7 @@ int Robot::FollowLine(){
 		turnLeft();
 		turnLeftBool = 0;
 		printf("\n turning left");
-		printf(" \nline error: %.1f err: %.3f",line_error,err);
+		printf(" \nline error: %.3f err: %.3f",line_error,err);
 		sleep1(60);	
 		} else if(turnLeftBool == 2) {
 		turnRight();
