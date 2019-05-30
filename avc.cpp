@@ -159,11 +159,12 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					lineTurn = countCol;
 				} */
 			}
-			printf("\n\nline turn before avging"); //debug purpose
+			printf("\n\nline turn before avging: %.3f",lineTurn); //debug purpose
 			
 			totredavg /= cam_width;
 			totblueavg /= cam_width;
-			lineTurn = lineTurn/cam_width; // avg line pos - maybe this shouldnt be avged?			
+			lineTurn = lineTurn/cam_width; // avg line pos - maybe this shouldnt be avged?	
+			printf("\n\nline turn AFTER avging: %.3f",lineTurn); //debug purpose		
 				
 				clock_gettime(CLOCK_MONOTONIC, &ts_end);
 				long dt = (ts_end.tv_sec-ts_start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
