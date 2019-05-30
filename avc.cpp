@@ -45,7 +45,7 @@ void Robot::openGate(){
 	v_left = 65;
 	v_right = 30;
 	SetMotors();
-	sleep1(5000);
+	sleep1(2000);
 	quadrant = 2;
 	v_left = 51;
 	v_right = 46;
@@ -94,8 +94,12 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				
 				totredavg += get_pixel(cam_height/2, i,0);
 				totblueavg += get_pixel(cam_height/2, i,2);
+				
 				} 
-				if (totredavg/cam_width > totblueavg/cam_width){
+				totredavg /= cam_width;
+				totblueavg /= cam_width;
+				printf("\n red: %.3f blue: %.3f",totredavg, totblueavg);
+				if (totredavg > totblueavg){
 				quadrant++;
 				printf("\n Next Quadrant now at quad: %d",quadrant);
 			}  
