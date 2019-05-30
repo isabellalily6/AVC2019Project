@@ -88,16 +88,16 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			totblueavg += get_pixel(cam_height/2, countCol,2);
 			
 			if(totwhite > threshold){
-				whiteArr[countCol] = 0;
+				whiteArr[countCol] = 0; //0 is white
 			} else {
-			whiteArr[countCol] = 1;	
+			whiteArr[countCol] = 1;	//1 is black
 			}
 			line_error += whiteArr[countCol] * (countCol-middleIndex);
 			lineCount += whiteArr[countCol];
 			}
 			
-			if(countCol > 310) { 
-					reverseBool = 1;
+			if(lineCount == 0 ) { //0 might be too harsh for this - needs testing
+					reverseBool = 1; //if the line is not present reverse
 					break;
 			}
 				
@@ -166,13 +166,13 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				prev_error = line_error;
 				err = (int)((line_error*kp) + ((line_error - prev_error) * kd/dt));
 				printf("\nline3: %d lineTurn %.3f middleIndex: %d",line3,lineTurn,middleIndex);
-			if(line3 < 10) {
+			if(line3 > 310) { //crossroad sensor
 				turnLeftBool =1;
-				printf("\nline3 is 0");
+				printf("\nrobot is at a cross roads");
 							
-			} else if (lineTurn > 0) {
+			} else if (lineTurn > cam_width/2 + 20) { // to turn based off avg line pos with wiggle room
 				turnRightBool =1;
-			} else if (lineTurn < 0) {
+			} else if (lineTurn < cam_width/2 + 20) { //to turn based off avg line pos with wiggle room
 				turnLeftBool =1;
 			}						
 				printf("\n%d: Whiteness: %.1f red: %.1f blue: %.1f",quadrant,totwhite,totredavg,totblueavg);	
@@ -296,6 +296,16 @@ void Robot::turnRight() {
 		set_motors(3, v_left_go);
 		
 }
+void Robot::fullTurn() { //180 turn for quad 3 - need to test the sleep value
+		
+		v_left =48 -  (v_left_go - 48);
+		
+		v_right = 48 + (48 - v_right_go);
+		SetMotors();
+		sleep1(500); // this needs to be tested !!
+	
+}
+
 int Robot::InitHardware(){
 	init(0);
 	open_screen_stream();
