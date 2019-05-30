@@ -155,7 +155,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				turnLeftBool =1;
 							
 			} else if (lineTurn > 0) {
-				turnRightBool();
+				turnRightBool =1;
 			} else if (lineTurn < 0) {
 				turnLeftBool =1;
 			}						
