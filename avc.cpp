@@ -113,7 +113,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 		} else if(quadrant == 3) {	
 			totredavg =0;
 			totblueavg =0;
-			printf("\ncurrent quadrant %d",quadrant);		
+			//printf("\ncurrent quadrant %d",quadrant);		
 			
 			double lineTurn = 0; //0 is left 1 is right
 			int line3 = 0;
@@ -207,11 +207,10 @@ int Robot::FollowLine(){
 			v_right = 30;
 			}
 		printf(" \nline error: %.1f err: %.3f",line_error,err);
-		
-		
+				
 		SetMotors();
 	} else if(quadrant == 3){
-		printf("\ncurrent quadrant %d",quadrant);
+		//printf("\ncurrent quadrant %d",quadrant);
 		if(turnLeftBool == 1) {
 		turnLeft();
 		turnLeftBool = 0;
@@ -265,7 +264,8 @@ int Robot::turnAround() {
 void Robot::turnLeft() {
 		set_motors(5, 48);
 		set_motors(3, 52);
-		sleep1(600);
+		sleep1(200);
+		printf("turn over");
 		set_motors(5, v_right_go);
 		set_motors(3, v_left_go);
 		
@@ -273,7 +273,8 @@ void Robot::turnLeft() {
 void Robot::turnRight() {
 		set_motors(5, v_right_go);
 		set_motors(3, v_left_go);
-		sleep1(600);
+		sleep1(200);
+		printf("turn over");
 		set_motors(5, v_right_go);
 		set_motors(3, v_left_go);
 		
