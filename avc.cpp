@@ -54,6 +54,8 @@ void Robot::openGate(){
 int Robot::MeasureLine(){ //only coded for quad 2 rn
 	if(quadrant == 2) {
 	float totwhite = 0;	
+	float totredavg = 0;
+	float totblueavg =0;
 	float whiteArr[cam_width];
 	float errorArray[cam_width];
 	int whiteBool = 0;
@@ -90,10 +92,10 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 		    printf("\nwhiteness: %.1f",totwhite);
 		    for(int i = 0; i < cam_width; i++){
 				
-				totredavg += get_pixel(240/2, countCol,0);
-				totblueavg += get_pixel(240/2, countCol,2);
+				totredavg += get_pixel(cam_height/2, i,0);
+				totblueavg += get_pixel(cam_height/2, i,2);
 				} 
-				if (totred/cam_width > totblue/cam_width+30){
+				if (totred/cam_width > totblue/cam_width){
 				quadrant++;
 				printf("\n Next Quadrant now at quad: %d",quadrant);
 			}  
