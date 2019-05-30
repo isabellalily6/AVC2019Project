@@ -101,7 +101,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 			if(lineCount == 0 ) { //0 might be too harsh for this - needs testing
 					reverseBool = 1; //if the line is not present reverse
-					break;
+					return 0;
 			}
 				
 			
