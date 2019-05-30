@@ -115,7 +115,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			totblueavg =0;
 			//printf("\ncurrent quadrant %d",quadrant);		
 			
-			double lineTurn = 0; //0 is left 1 is right
+			double lineTurn = 0; //- is left + is right
 			int line3 = 0;
 			int middleIndex = (cam_width - 1)/2;
 			line_error = 0;
@@ -155,8 +155,10 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				long dt = (ts_end.tv_sec-ts_start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
 				prev_error = line_error;
 				err = (int)((line_error*kp) + ((line_error - prev_error) * kd/dt));
+				printf("line3: %d lineTurn %f",line3,lineTurn);
 			if(line3 == 0) {
 				turnLeftBool =1;
+				printf("\nline3 is 0");
 							
 			} else if (lineTurn > 0) {
 				turnRightBool =1;
