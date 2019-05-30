@@ -210,7 +210,7 @@ int Robot::FollowLine(){
 		turnLeft();
 		turnLeftBool = 0;
 		sleep1(100);	
-		} else if(leftBoolTurn == 2) {
+		} else if(turnLeftBool == 2) {
 		turnRight();
 		turnRightBool = 0;	
 		sleep1(100);
