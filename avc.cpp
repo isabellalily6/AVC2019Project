@@ -206,9 +206,9 @@ int Robot::FollowLine(){
 		
 		SetMotors();
 	} else if(quadrant == 3){
-		if(leftBoolTurn == 1) {
+		if(turnLeftBool == 1) {
 		turnLeft();
-		leftBoolTurn = 0;
+		turnLeftBool = 0;
 		sleep1(100);	
 		} else if(leftBoolTurn == 2) {
 		turnRight();
@@ -235,6 +235,7 @@ int Robot::FollowLine(){
 		SetMotors();
 		}
 	} 
+	}
 	return 0;
 }
 int Robot::turnAround() {
