@@ -97,7 +97,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 		    	totredavg /= cam_width;
 				totblueavg /= cam_width;
 				printf("\n red: %.3f blue: %.3f",totredavg, totblueavg);
-				if (totredavg > totblueavg+35){
+				if (totredavg > totblueavg + 50 && totredavg > 230){
 				quadrant++;
 				printf("\n Next Quadrant now at quad: %d",quadrant);
 			}  
