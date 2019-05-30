@@ -111,6 +111,8 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				return 0;
 			}  
 		} else if(quadrant == 3) {	
+			totredavg =0;
+			totredblue =0;
 			printf("\ncurrent quadrant %d",quadrant);		
 			
 			double lineTurn = 0; //0 is left 1 is right
@@ -144,6 +146,9 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					lineTurn = countCol;
 				} */
 			}
+			
+			totredavg /= cam_width;
+			totblueavg /= cam_width;
 			lineTurn = lineTurn/cam_width; // avg line pos 			
 				
 				clock_gettime(CLOCK_MONOTONIC, &ts_end);
