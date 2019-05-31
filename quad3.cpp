@@ -189,16 +189,16 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				printf("\nrobot is at a cross roads");
 							
 			} else if(line3 < 50) {
-				printf("\n Dead End");
+				printf("\n\n\n\n Dead End\n\n\n\n");
 				deadEndBool =1;
 			} else if (lineTurn > cam_width/2 + 20) { // to turn based off avg line pos with wiggle room
 				turnRightBool =1;
-				printf("\nrobot wants to turn to the right"); //for debug
+				printf("\n\n\n\nrobot wants to turn to the right\n\n\n"); //for debug
 			} else if (lineTurn < cam_width/2 - 20) { //to turn based off avg line pos with wiggle room
 				turnLeftBool =1;
-				printf("\nrobot wants to turn to the left");
+				printf("\n\n\n\nrobot wants to turn to the left\n\n\n\n");
 			} else{
-				printf("none of the above conditions are met - must be straight ? ");
+				printf("\n\nnone of the above conditions are met - must be straight ? \n\n");
 				}	 //for debug					
 				printf("\n%d: Whiteness: %.1f red: %.1f blue: %.1f",quadrant,totwhite,totredavg,totblueavg);	
 					
