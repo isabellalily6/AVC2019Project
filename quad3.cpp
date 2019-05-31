@@ -13,7 +13,7 @@ class Robot{
     double line_error =0;
     double leftLine_error = 0;
     double rightLine_error = 0;
-    int quadrant = 3;
+    int quadrant = 2;
     const int cam_width = 320;
     const int cam_height = 240;
     const int v_left_go = 52;
