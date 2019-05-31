@@ -299,6 +299,7 @@ int Robot::reverse() {
 	}
 	SetMotors();
 	printf("\n\nReversing now\n");
+	reverseBool = 0;
 	sleep1(500);
 	
 	return 0;
