@@ -196,7 +196,10 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				printf("\nrobot wants to turn to the right"); //for debug
 			} else if (lineTurn < cam_width/2 + 20) { //to turn based off avg line pos with wiggle room
 				turnLeftBool =1;
-			}	printf("\nrobot wants to turn to the left"); //for debug					
+				printf("\nrobot wants to turn to the left");
+			} else{
+				printf("none of the above conditions are met - must be straight ? ");
+				}	 //for debug					
 				printf("\n%d: Whiteness: %.1f red: %.1f blue: %.1f",quadrant,totwhite,totredavg,totblueavg);	
 					
 			if (totredavg - totblueavg > 130){
@@ -313,7 +316,7 @@ void Robot::turnLeft() {
 		v_left = 52;
 		v_right = 48;
 		SetMotors();
-		sleep1(200);
+		sleep1(600);
 		printf("turn over");
 		v_left = v_left_go;
 		v_right =v_right_go;
@@ -326,7 +329,7 @@ void Robot::turnRight() {
 		v_left = 48;
 		v_right = 44;
 		SetMotors();
-		sleep1(200);
+		sleep1(600);
 		printf("turn over");
 		v_left = v_left_go;
 		v_right =v_right_go;
