@@ -113,7 +113,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			totredavg /= cam_width;
 			totblueavg /= cam_width;
 			printf("\n red: %.3f blue: %.3f",totredavg, totblueavg);
-				if (totredavg - totblueavg > 130){
+				if (totredavg - totblueavg > 120){
 				quadrant = 3;
 				v_left = v_left_go;
 				v_right = v_right_go;
@@ -197,10 +197,10 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			} else if(line3 == 0) {
 				printf("\n Dead End");
 				deadEndBool =1;
-			} else if (lineTurn > cam_width/2 + 20) { // to turn based off avg line pos with wiggle room
+			} else if (lineTurn > (-1)*(50)) { // to turn based off avg line pos with wiggle room
 				turnRightBool =1;
 				printf("\nrobot wants to turn to the right"); //for debug
-			} else if (lineTurn < cam_width/2 + 20) { //to turn based off avg line pos with wiggle room
+			} else if (lineTurn < 50) { //to turn based off avg line pos with wiggle room
 				turnLeftBool =1;
 			}	printf("\nrobot wants to turn to the left"); //for debug					
 				printf("\n%d: Whiteness: %.1f red: %.1f blue: %.1f",quadrant,totwhite,totredavg,totblueavg);	
