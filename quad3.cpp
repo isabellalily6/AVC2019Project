@@ -11,6 +11,8 @@ class Robot{
 	int v_left, v_right, cam_tilt;
     int dv;
     double line_error =0;
+    double leftLine_error = 0;
+    double rightLine_error = 0;
     int quadrant = 3;
     const int cam_width = 320;
     const int cam_height = 240;
@@ -161,10 +163,10 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				} else {
 					whiteArr[countCol] = 1;	
 				}
-				line_error += whiteArr[countCol] * (countCol-middleIndex);
+				line_error += whiteArr[countCol];
 				line3 += whiteArr[countCol];
 				if(whiteArr[countCol] == 1){
-					lineTurn += countCol; //to count the pos of the line - l or r ?
+					lineTurn += (countCol) - (160); //to count the pos of the line - l or r ?
 			    }
 				
 				/* make a detection for a right hand turn
@@ -172,11 +174,34 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					lineTurn = countCol;
 				} */
 			}
+			for(int countCol = cam_width/3-10; countCol < cam_width/3 + 10; countCol++){
+				totwhite = get_pixel(240/2, countCol,3); //for err line 
+				if(totwhite > threshold){
+					whiteArr[countCol] = 0;
+				} else {
+					whiteArr[countCol] = 1;	
+				}
+				leftLine_error += whiteArr[countCol];
+			}
+			for(int countCol = (cam_width*2)/3-10; countCol < (2*cam_width)/3 + 10; countCol++){
+				totwhite = get_pixel(240/2, countCol,3); //for err line 
+				if(totwhite > threshold){
+					whiteArr[countCol] = 0;
+				} else {
+					whiteArr[countCol] = 1;	
+				}
+				rightLine_error += whiteArr[countCol];
+			}
+			printf("\n\nRightline error: %.5f LeftlineError: %.5f",rightLine_error,leftLine_error);
+			rightLine_error /= (2*cam_width)/3;
+			leftLine_error /= cam_width/3;
+			printf("\n\nRightline error AVG: %.5f LeftlineError AVG: %.5f",rightLine_error,leftLine_error);
+		
 			printf("\n\nline turn before avging: %.3f",lineTurn); //debug purpose
 			
 			totredavg /= cam_width;
 			totblueavg /= cam_width;
-			lineTurn = lineTurn/cam_width; // avg line pos - maybe this shouldnt be avged?	
+			//lineTurn = lineTurn/cam_width; // avg line pos - maybe this shouldnt be avged?	
 			printf("\n\nline turn AFTER avging: %.3f",lineTurn); //debug purpose		
 				
 				clock_gettime(CLOCK_MONOTONIC, &ts_end);
@@ -192,7 +217,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			} else if(line3 < 30) {
 				printf("\n\n\n\n Dead End\n\n\n\n");
 				deadEndBool =1;
-			} else if (lineTurn < middleIndex + 30) { // to turn based off avg line pos with wiggle room
+			} else if (lineTurn < 30) { // to turn based off avg line pos with wiggle room
 				turnRightBool = 1;
 				printf("\n\n\n\nrobot wants to turn to the right\n\n\n"); //for debug
 			} else if (lineTurn < middleIndex - 30) { //to turn based off avg line pos with wiggle room looks to be -30 ish based on testing
