@@ -56,21 +56,33 @@ int Robot::SetMotors(){
 	 return 0; 
 
 }
-void Robot::turnRight() {
+void Robot::turnLeft() {
 		v_left = 44;
 		v_right = 44;
 		SetMotors();
 		sleep1(1700);
-		printf("turn over");
+		printf("turn left over");
 		v_left = v_left_go;
 		v_right =v_right_go;
 		SetMotors();
 		
 }
+void Robot::turnRight() {
+		v_left = 52;
+		v_right = 52;
+		SetMotors();
+		sleep1(1700);
+		printf("turn right over");
+		v_left = v_left_go;
+		v_right =v_right_go;
+		SetMotors();		
+}
+
 int main(){
 Robot robot;
 	robot.InitHardware();
-	robot.turnRight();
+	robot.turnLeft();
+	robot.turnRight();	
 	close_screen_stream();
 		stoph();
 		return 0;	
