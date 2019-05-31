@@ -184,11 +184,11 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				err = (int)((line_error*kp) + ((line_error - prev_error) * kd/dt));
 				prev_error = line_error;
 				printf("\nline3: %d lineTurn %.3f middleIndex: %d",line3,lineTurn,middleIndex);
-			if(line3 > 310) { //crossroad sensor
+			if(line3 > 230) { //crossroad sensor
 				turnLeftBool =1;
 				printf("\nrobot is at a cross roads");
 							
-			} else if(line3 == 0) {
+			} else if(line3 < 50) {
 				printf("\n Dead End");
 				deadEndBool =1;
 			} else if (lineTurn > cam_width/2 + 20) { // to turn based off avg line pos with wiggle room
