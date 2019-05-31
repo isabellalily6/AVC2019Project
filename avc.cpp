@@ -101,7 +101,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			totredavg += get_pixel(cam_height/2, countCol,0); //for red sensor
 			totblueavg += get_pixel(cam_height/2, countCol,2);
 			
-			if(totwhite > threshold+5){
+			if(totwhite > threshold){
 				whiteArr[countCol] = 0; //0 is white
 			} else {
 			whiteArr[countCol] = 1;	//1 is black
@@ -287,16 +287,18 @@ int Robot::FollowLine(){
 	return 0;
 }
 int Robot::reverse() {
-	if (v_left > 48){
-		v_left = 48 - (v_left-48);
+	/*if (v_left > 48){
+		v_left = 48 - (v_left_go-48);
 	} else {
-		v_left = 48 + (48 - v_left);
+		v_left = 48 + (48 - v_left_go);
 	}
 	if (v_right > 48){
-		v_right = 48 - (v_right-48);
+		v_right = 48 - (v_right_go-48);
 	} else {
-		v_right = 48 + (48 - v_right);
-	}
+		v_right = 48 + (48 - v_right_go);
+	} */
+	v_right = v_left_go;
+	v_left = v_right_go;
 	SetMotors();
 	printf("\n\nReversing now\n");
 	reverseBool = 0;
