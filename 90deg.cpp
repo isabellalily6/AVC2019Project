@@ -81,7 +81,7 @@ void Robot::fullTurn() {
 		v_left = 41;
 		v_right = 45;
 		SetMotors();
-		sleep1(3400);
+		sleep1(3000);
 		printf("turn around over");
 		v_left = v_left_go;
 		v_right =v_right_go;
