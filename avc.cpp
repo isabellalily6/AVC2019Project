@@ -298,10 +298,10 @@ int Robot::reverse() {
 		v_right = 48 + (48 - v_right_go);
 	} */
 	v_right = 52;
-	v_left = 43;
+	v_left = 40;
 	SetMotors();
 	printf("\n\nReversing now\n\n");
-	sleep1(1000);
+	sleep1(600);
 	printf("\n\nReversing over\n\n");
 	reverseBool = 0;
 	//sleep1(2000);
