@@ -110,7 +110,21 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			lineCount += whiteArr[countCol];
 			}
 			printf("\n\nLineCount: %d",lineCount);
-			if(lineCount < 50 ) { //0 might be too harsh for this - needs testing
+			totredavg /= cam_width;
+			totblueavg /= cam_width;
+			printf("\n red: %.3f blue: %.3f",totredavg, totblueavg);
+				if (totredavg - totblueavg > 130){
+				quadrant = 3;
+				v_left = v_left_go;
+				v_right = v_right_go;
+				SetMotors();
+				
+				printf("\n\n\n\n\n Next Quadrant now at quad: %d\n\n\n\n\n",quadrant);
+				printf("\n Threshold: %f", threshold);
+				sleep1(600);
+				return 0;
+			}  
+			if(lineCount < 50) { //0 might be too harsh for this - needs testing
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
 			}
@@ -123,18 +137,8 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			err = ((line_error*kp) + (((line_error - prev_error) * kd)/dt));
 			prev_error = line_error;		
 		    printf("\nwhiteness: %.1f",totwhite);
-		    	totredavg /= cam_width;
-				totblueavg /= cam_width;
-				printf("\n red: %.3f blue: %.3f",totredavg, totblueavg);
-				if (totredavg - totblueavg > 130){
-				quadrant = 3;
-				v_left = v_left_go;
-				v_right = v_right_go;
-				SetMotors();
-				printf("\n\n\n\n\n Next Quadrant now at quad: %d\n\n\n\n\n",quadrant);
-				printf("\n Threshold: %f", threshold);
-				return 0;
-			}  
+		    	
+				
 		} else if(quadrant == 3) {	//quad3
 			totredavg =0;
 			totblueavg =0;
