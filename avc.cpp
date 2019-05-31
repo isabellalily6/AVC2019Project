@@ -66,7 +66,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float errorArray[cam_width];
 	int whiteBool = 0;
 	double threshold = 0;
-	double prevThresh = 120;
+	double prevThresh = 100;
 	line_present = 1;
 	
 	
@@ -77,6 +77,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	threshold /= cam_width;
 	printf("\nThreshold: %f prevThresh: %f:",threshold,prevThresh);
 	if(threshold > prevThresh + 50){
+		printf("setting thresh to prevthresh");
 		threshold = prevThresh;
 	} else {
 		prevThresh = threshold;
