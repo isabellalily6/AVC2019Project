@@ -93,9 +93,7 @@ Robot robot;
 	robot.turnLeft();
 	robot.turnRight();
 	robot.fullTurn();
-	robot.v_left = 48;
-	robot.v_right = 48;
-	robot.SetMotors();	
+		
 	close_screen_stream();
 		stoph();
 		return 0;	
