@@ -65,7 +65,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float whiteArr[cam_width];
 	float errorArray[cam_width];
 	int whiteBool = 0;
-	double threshold = 100;
+	double threshold = 80;
 	//double prevThresh = 100;
 	line_present = 1;
 	
@@ -110,7 +110,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			lineCount += whiteArr[countCol];
 			}
 			printf("\n\nLineCount: %d",lineCount);
-			if(lineCount > 230 ) { //0 might be too harsh for this - needs testing
+			if(lineCount < 50 ) { //0 might be too harsh for this - needs testing
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
 			}
@@ -298,10 +298,11 @@ int Robot::reverse() {
 		v_right = 48 + (48 - v_right_go);
 	} */
 	v_right = 52;
-	v_left = 46;
+	v_left = 43;
 	SetMotors();
-	sleep1(2000);
 	printf("\n\nReversing now\n\n");
+	sleep1(1000);
+	printf("\n\nReversing over\n\n");
 	reverseBool = 0;
 	//sleep1(2000);
 	
