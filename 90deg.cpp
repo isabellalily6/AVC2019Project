@@ -57,7 +57,7 @@ int Robot::SetMotors(){
 
 }
 void Robot::turnRight() {
-		v_left = 48;
+		v_left = 44;
 		v_right = 44;
 		SetMotors();
 		sleep1(1500);
