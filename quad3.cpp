@@ -67,7 +67,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float whiteArr[cam_width];
 	float errorArray[cam_width];
 	int whiteBool = 0;
-	double threshold = 80;
+	double threshold = 60;
 	//double prevThresh = 100;
 	line_present = 1;
 	
@@ -215,7 +215,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				turnLeftBool =1;
 				printf("\nrobot is at a cross roads");
 							
-			} else if(line3 < 30) {
+			} else if(line3 < 25) {
 				printf("\n\n\n\n Dead End\n\n\n\n");
 				deadEndBool =1;
 			} else if (rightLine_error - leftLine_error > 70) { // to turn based off avg line pos with wiggle room
