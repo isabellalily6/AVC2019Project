@@ -174,7 +174,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					lineTurn = countCol;
 				} */
 			}
-			for(int countCol = cam_width/3-20; countCol < cam_width/3 + 20; countCol++){
+			for(int countCol = (cam_width/3)-5; countCol < (cam_width/3) + 5; countCol++){
 				totwhite = get_pixel(240/2, countCol,3); //for err line 
 				if(totwhite > threshold){
 					whiteArr[countCol] = 0;
@@ -183,7 +183,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				}
 				leftLine_error += whiteArr[countCol];
 			}
-			for(int countCol = (cam_width*2)/3-20; countCol < (2*cam_width)/3 + 20; countCol++){
+			for(int countCol = ((cam_width*2)/3)-5; countCol < ((2*cam_width)/3) + 5; countCol++){
 				totwhite = get_pixel(240/2, countCol,3); //for err line 
 				if(totwhite > threshold){
 					whiteArr[countCol] = 0;
