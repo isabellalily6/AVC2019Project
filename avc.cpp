@@ -79,6 +79,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	if(threshold > prevThresh + 50){
 		printf("setting thresh to prevthresh");
 		threshold = prevThresh;
+		prevThresh = 100;
 	} else {
 		prevThresh = threshold;
 		printf("\n prevThresh: %f",prevThresh);
