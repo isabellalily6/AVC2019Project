@@ -297,8 +297,8 @@ int Robot::reverse() {
 	} else {
 		v_right = 48 + (48 - v_right_go);
 	} */
-	v_right = 52;
-	v_left = 40;
+	v_right = 51;
+	v_left = 42;
 	SetMotors();
 	printf("\n\nReversing now\n\n");
 	sleep1(300);
