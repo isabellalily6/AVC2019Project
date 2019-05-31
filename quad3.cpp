@@ -53,7 +53,7 @@ void Robot::openGate(){
 	v_right = 30;
 	SetMotors();
 	sleep1(2000);
-	quadrant = 3;
+	quadrant = 2;
 	v_left = v_left_go;
 	v_right = v_right_go;
 	SetMotors();
