@@ -216,7 +216,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			if(line3 > 230) { //crossroad sensor
 				turnLeftBool =1;
 				printf("\nrobot is at a cross roads");
-							
+				sleep1(95);
 			} else if(line3 < 10) {
 				printf("\n\n\n\n Dead End\n\n\n\n");
 				deadEndBool =1;
