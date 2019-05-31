@@ -194,7 +194,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			} else if (lineTurn > cam_width/2 + 20) { // to turn based off avg line pos with wiggle room
 				turnRightBool =1;
 				printf("\nrobot wants to turn to the right"); //for debug
-			} else if (lineTurn < cam_width/2 + 20) { //to turn based off avg line pos with wiggle room
+			} else if (lineTurn < cam_width/2 - 20) { //to turn based off avg line pos with wiggle room
 				turnLeftBool =1;
 				printf("\nrobot wants to turn to the left");
 			} else{
@@ -312,42 +312,35 @@ int Robot::reverse() {
 	return 0;
 }
 void Robot::turnLeft() {
-		
-		v_left = 52;
-		v_right = 48;
+		v_left = 44;
+		v_right = 44;
 		SetMotors();
-		sleep1(600);
-		printf("turn over");
+		sleep1(1700);
+		printf("turn left over");
 		v_left = v_left_go;
 		v_right =v_right_go;
 		SetMotors();
-		
-		
 		
 }
 void Robot::turnRight() {
-		v_left = 48;
-		v_right = 44;
+		v_left = 52;
+		v_right = 47;
 		SetMotors();
-		sleep1(600);
-		printf("turn over");
+		sleep1(1700);
+		printf("turn right over");
 		v_left = v_left_go;
 		v_right =v_right_go;
-		SetMotors();
-		
+		SetMotors();		
 }
-void Robot::fullTurn() { //180 turn for quad 3 - need to test the sleep value
-		
-		v_left =48 -  (v_left_go - 48);
-		
-		v_right = 48 + (48 - v_right_go);
+void Robot::fullTurn() {
+		v_left = 41;
+		v_right = 45;
 		SetMotors();
-		sleep1(500); // this needs to be tested !!
+		sleep1(2400);
+		printf("turn around over");
 		v_left = v_left_go;
-		v_right = v_right_go;
-		SetMotors();
-		deadEndBool = 0;
-	
+		v_right =v_right_go;
+		SetMotors();		
 }
 
 int Robot::InitHardware(){
