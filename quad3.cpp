@@ -221,13 +221,15 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				printf("\n\n\n\n Dead End\n\n\n\n");
 				deadEndBool =1;
 			} else if (rightLine_error - leftLine_error > 70) { // to turn based off avg line pos with wiggle room
-				turnRightBool = 1;
-				printf("\n\n\n\nrobot wants to turn to the right\n\n\n"); //for debug
-				sleep1(55);
-			} else if (leftLine_error - rightLine_error > 60) { //to turn based off avg line pos with wiggle room looks to be -30 ish based on testing
+				
 				turnLeftBool =1;
 				printf("\n\n\n\nrobot wants to turn to the left\n\n\n\n");
-				sleep1(55);
+				sleep1(95);
+			} else if (leftLine_error - rightLine_error > 60) { //to turn based off avg line pos with wiggle room looks to be -30 ish based on testing
+				
+				turnRightBool = 1;
+				printf("\n\n\n\nrobot wants to turn to the right\n\n\n"); //for debug
+				sleep1(95);
 			} else{
 				printf("\n\nnone of the above conditions are met - must be straight ? \n\n"); //lineavg is -15 for a straight line
 				}	 //for debug					
