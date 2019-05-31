@@ -184,10 +184,12 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				err = (int)((line_error*kp) + ((line_error - prev_error) * kd/dt));
 				prev_error = line_error;
 				printf("\nline3: %d lineTurn %.3f middleIndex: %d",line3,lineTurn,middleIndex);
-			if(line3 > 310) { //crossroad sensor
+				if(line3 < 50 ) { //0 might be too harsh for this - needs testing
+					reverseBool = 1; //if the line is not present reverse
+					return 0;
+			} else if(line3 > 310) { //crossroad sensor
 				turnLeftBool =1;
-				printf("\nrobot is at a cross roads");
-							
+				printf("\nrobot is at a cross roads");							
 			} else if(line3 == 0) {
 				printf("\n Dead End");
 				deadEndBool =1;
@@ -265,7 +267,7 @@ int Robot::FollowLine(){
 			deadEndBool =0;
 		} else {
 			v_left = v_left_go + err;
-		v_right = v_right_go + err;
+			v_right = v_right_go + err;
 		if(v_left > 65) {
 			v_left = 65;
 				
@@ -309,42 +311,36 @@ int Robot::reverse() {
 	return 0;
 }
 void Robot::turnLeft() {
-		
-		v_left = 52;
-		v_right = 48;
-		SetMotors();
-		sleep1(200);
-		printf("turn over");
-		v_left = v_left_go;
-		v_right =v_right_go;
-		SetMotors();
-		
-		
-		
-}
-void Robot::turnRight() {
-		v_left = 48;
+		v_left = 44;
 		v_right = 44;
 		SetMotors();
-		sleep1(200);
-		printf("turn over");
+		sleep1(1700);
+		printf("turn left over");
 		v_left = v_left_go;
 		v_right =v_right_go;
 		SetMotors();
 		
 }
-void Robot::fullTurn() { //180 turn for quad 3 - need to test the sleep value
-		
-		v_left =48 -  (v_left_go - 48);
-		
-		v_right = 48 + (48 - v_right_go);
+
+void Robot::turnRight() {
+		v_left = 52;
+		v_right = 47;
 		SetMotors();
-		sleep1(500); // this needs to be tested !!
+		sleep1(1700);
+		printf("turn right over");
 		v_left = v_left_go;
-		v_right = v_right_go;
+		v_right =v_right_go;
+		SetMotors();		
+}
+void Robot::fullTurn() {
+		v_left = 41;
+		v_right = 45;
 		SetMotors();
-		deadEndBool = 0;
-	
+		sleep1(2400);
+		printf("turn around over");
+		v_left = v_left_go;
+		v_right =v_right_go;
+		SetMotors();		
 }
 
 int Robot::InitHardware(){
