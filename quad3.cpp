@@ -95,6 +95,8 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	int lineCount = 0;
 	struct timespec ts_start;
 	struct timespec ts_end;
+	rightLine_error = 0;
+	leftLine_error = 0;
 	clock_gettime(CLOCK_MONOTONIC, &ts_start);
 		for(int countCol = 0; countCol < 320; countCol++){
 			
@@ -216,7 +218,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			} else if(line3 < 30) {
 				printf("\n\n\n\n Dead End\n\n\n\n");
 				deadEndBool =1;
-			} else if (rightLine_error - leftLine_error > 60) { // to turn based off avg line pos with wiggle room
+			} else if (rightLine_error - leftLine_error > 70) { // to turn based off avg line pos with wiggle room
 				turnRightBool = 1;
 				printf("\n\n\n\nrobot wants to turn to the right\n\n\n"); //for debug
 			} else if (leftLine_error - rightLine_error > 60) { //to turn based off avg line pos with wiggle room looks to be -30 ish based on testing
