@@ -14,10 +14,10 @@ class Robot{
     int quadrant = 1;
     const int cam_width = 320;
     const int cam_height = 240;
-    const int v_left_go = 51;
-    const int v_right_go = 46;
-    double kp = 0.0004;
-    double kd = 0.001;
+    const int v_left_go = 53;
+    const int v_right_go = 44;
+    double kp = 0.001;
+    double kd = 0.003;
     double err;
     int line_present = 1;
     int prev_error;
