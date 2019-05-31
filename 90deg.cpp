@@ -69,7 +69,7 @@ void Robot::turnLeft() {
 }
 void Robot::turnRight() {
 		v_left = 52;
-		v_right = 52;
+		v_right = 47;
 		SetMotors();
 		sleep1(1700);
 		printf("turn right over");
