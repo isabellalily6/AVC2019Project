@@ -149,6 +149,8 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			int line3 = 0;
 			int middleIndex = (cam_width - 1)/2;
 			line_error = 0;
+			rightLine_error = 0;
+			leftLine_error = 0;
 			struct timespec ts_start;
 			struct timespec ts_end;
 			clock_gettime(CLOCK_MONOTONIC, &ts_start);
@@ -215,7 +217,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				turnLeftBool =1;
 				printf("\nrobot is at a cross roads");
 							
-			} else if(line3 < 25) {
+			} else if(line3 < 10) {
 				printf("\n\n\n\n Dead End\n\n\n\n");
 				deadEndBool =1;
 			} else if (rightLine_error - leftLine_error > 70) { // to turn based off avg line pos with wiggle room
