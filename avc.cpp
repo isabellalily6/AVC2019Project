@@ -75,10 +75,12 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 		threshold += get_pixel(120,i,3);
 	}
 	threshold /= cam_width;
+	printf("\nThreshold: %f prevThresh: %f:",threshold,prevThresh);
 	if(threshold > prevThresh + 50){
 		threshold = prevThresh;
 	} else {
 		prevThresh = threshold;
+		printf("\n prevThresh: %f",prevThresh);
 	}
 	
 	//how to get array of white pixel? use that for totwhite
@@ -295,7 +297,7 @@ int Robot::reverse() {
 	}
 	SetMotors();
 	printf("\n\nReversing now\n");
-	sleep1(50);
+	sleep1(500);
 	
 	return 0;
 }
