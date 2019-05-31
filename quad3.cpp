@@ -121,7 +121,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				v_right = v_right_go;
 				SetMotors();
 				printf("\n Next Quadrant now at quad: %d",quadrant);
-				sleep1("300");
+				sleep1(300);
 				//printf("\n Threshold: %f", threshold);
 				return 0;
 			}
