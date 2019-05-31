@@ -193,9 +193,8 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				rightLine_error += whiteArr[countCol];
 			}
 			printf("\n\nRightline error: %.5f LeftlineError: %.5f",rightLine_error,leftLine_error);
-			rightLine_error /= (2*cam_width)/3;
-			leftLine_error /= cam_width/3;
-			printf("\n\nRightline error AVG: %.5f LeftlineError AVG: %.5f",rightLine_error,leftLine_error);
+			//87 seems to determine which turn
+			
 		
 			printf("\n\nline turn before avging: %.3f",lineTurn); //debug purpose
 			
@@ -217,10 +216,10 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			} else if(line3 < 30) {
 				printf("\n\n\n\n Dead End\n\n\n\n");
 				deadEndBool =1;
-			} else if (lineTurn < 30) { // to turn based off avg line pos with wiggle room
+			} else if (rightLine_error - leftLine_error > 60) { // to turn based off avg line pos with wiggle room
 				turnRightBool = 1;
 				printf("\n\n\n\nrobot wants to turn to the right\n\n\n"); //for debug
-			} else if (lineTurn < middleIndex - 30) { //to turn based off avg line pos with wiggle room looks to be -30 ish based on testing
+			} else if (leftLine_error - rightLine_error > 60) { //to turn based off avg line pos with wiggle room looks to be -30 ish based on testing
 				turnLeftBool =1;
 				printf("\n\n\n\nrobot wants to turn to the left\n\n\n\n");
 			} else{
