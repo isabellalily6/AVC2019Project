@@ -66,6 +66,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float errorArray[cam_width];
 	int whiteBool = 0;
 	double threshold = 0;
+	double prevThresh = 120;
 	line_present = 1;
 	
 	
@@ -74,6 +75,12 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 		threshold += get_pixel(120,i,3);
 	}
 	threshold /= cam_width;
+	if(threshold > prevThresh + 50){
+		threshold = prevThresh;
+	} else {
+		prevThresh = threshold;
+	}
+	
 	//how to get array of white pixel? use that for totwhite
 	
 	//for(int countRow = 0; countRow < 240; countRow++) {
@@ -98,11 +105,12 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			line_error += whiteArr[countCol] * (countCol-middleIndex);
 			lineCount += whiteArr[countCol];
 			}
-			
+			printf("\n\nLineCount: %d",lineCount);
 			if(lineCount == 0 ) { //0 might be too harsh for this - needs testing
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
 			}
+			
 				
 			
 			clock_gettime(CLOCK_MONOTONIC, &ts_end);
