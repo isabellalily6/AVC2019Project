@@ -90,8 +90,8 @@ void Robot::fullTurn() {
 int main(){
 Robot robot;
 	robot.InitHardware();
-	robot.turnLeft();
-	robot.turnRight();
+	//robot.turnLeft();
+	//robot.turnRight();
 	robot.fullTurn();
 		
 	close_screen_stream();
