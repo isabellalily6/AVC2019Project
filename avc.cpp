@@ -377,6 +377,6 @@ int main() {
 		}
 	}
 		close_screen_stream();
-		//stoph();
+		stoph();
 		return 0;
 } 
