@@ -35,6 +35,18 @@ class Robot{
 	void fullTurn();
 		
 };
+int Robot::InitHardware(){
+	init(0);
+	open_screen_stream();
+	take_picture();
+	update_screen();
+	v_left = v_left_go;
+	v_right = v_right_go;
+	SetMotors();
+	hardware_exchange();
+	
+	return 0;
+}
 int Robot::SetMotors(){
 	
 	 set_motors(3, v_left);
