@@ -191,10 +191,10 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			} else if(line3 < 50) {
 				printf("\n\n\n\n Dead End\n\n\n\n");
 				deadEndBool =1;
-			} else if (lineTurn > cam_width/2 + 20) { // to turn based off avg line pos with wiggle room
+			} else if (lineTurn > -50) { // to turn based off avg line pos with wiggle room
 				turnRightBool =1;
 				printf("\n\n\n\nrobot wants to turn to the right\n\n\n"); //for debug
-			} else if (lineTurn < cam_width/2 - 20) { //to turn based off avg line pos with wiggle room
+			} else if (lineTurn < 50) { //to turn based off avg line pos with wiggle room
 				turnLeftBool =1;
 				printf("\n\n\n\nrobot wants to turn to the left\n\n\n\n");
 			} else{
