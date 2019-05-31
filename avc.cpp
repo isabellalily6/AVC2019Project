@@ -16,8 +16,8 @@ class Robot{
     const int cam_height = 240;
     const int v_left_go = 52;
     const int v_right_go = 45;
-    double kp = 0.0005;
-    double kd = 0.0007;
+    double kp = 0.0006;
+    double kd = 0.0000;
     double err;
     int line_present = 1;
     int prev_error;
@@ -90,7 +90,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			totredavg += get_pixel(cam_height/2, countCol,0); //for red sensor
 			totblueavg += get_pixel(cam_height/2, countCol,2);
 			
-			if(totwhite > threshold){
+			if(totwhite > threshold+5){
 				whiteArr[countCol] = 0; //0 is white
 			} else {
 			whiteArr[countCol] = 1;	//1 is black
