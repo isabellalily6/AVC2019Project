@@ -11,26 +11,31 @@ class Robot{
 	int v_left, v_right, cam_tilt;
     int dv;
     double line_error =0;
-    int quadrant = 1;
+    int quadrant = 3;
     const int cam_width = 320;
     const int cam_height = 240;
-    const int v_left_go = 51;
-    const int v_right_go = 43;
-    double kp = 0.003;
-    double kd = 0.002;
+    const int v_left_go = 52;
+    const int v_right_go = 45;
+    double kp = 0.0003;
+    double kd = 0.0007;
     double err;
     int line_present = 1;
     int prev_error;
+    int turnLeftBool = 0;
+    int turnRightBool = 0;
+    int reverseBool = 0;
+    int deadEndBool = 0;
     public:
     //Rob(){};
 	int InitHardware();
-	int turnAround();
+	int reverse();
 	int SetMotors();
 	int MeasureLine();
 	int FollowLine();
 	void openGate();
 	void turnRight();
 	void turnLeft();
+	void fullTurn();
 		
 };
 void Robot::openGate(){
@@ -42,64 +47,100 @@ void Robot::openGate(){
 	send_to_server(message);
 	receive_from_server(password);
 	send_to_server(password);
-	v_left = 65;
+	v_left = 64;
 	v_right = 30;
-	sleep1(5000);
-	quadrant = 2;
-	v_left = 51;
-	v_right = 43;
+	SetMotors();
+	sleep1(2000);
+	quadrant = 3;
+	v_left = v_left_go;
+	v_right = v_right_go;
+	SetMotors();
 }
 
 int Robot::MeasureLine(){ //only coded for quad 2 rn
-	if(quadrant == 2) {
+	
 	float totwhite = 0;	
 	float totredavg = 0;
 	float totblueavg =0;
 	float whiteArr[cam_width];
 	float errorArray[cam_width];
 	int whiteBool = 0;
-	double threshold = 0;
+	double threshold = 80;
+	//double prevThresh = 100;
 	line_present = 1;
 	
-	for(int i = 0; i < cam_width; i++){
+	
+	if(quadrant == 2) {
+	/*for(int i = 0; i < cam_width; i++){
 		threshold += get_pixel(120,i,3);
 	}
 	threshold /= cam_width;
+	printf("\nThreshold: %f prevThresh: %f:",threshold,prevThresh);
+	if(threshold > prevThresh + 50){
+		printf("setting thresh to prevthresh");
+		threshold = prevThresh;
+		prevThresh = 100;
+	} else {
+		prevThresh = threshold;
+		printf("\n prevThresh: %f",prevThresh);
+	} */
+	
 	//how to get array of white pixel? use that for totwhite
 	
 	//for(int countRow = 0; countRow < 240; countRow++) {
 	int middleIndex = (cam_width - 1)/2;
 	line_error = 0;
+	int lineCount = 0;
 	struct timespec ts_start;
 	struct timespec ts_end;
 	clock_gettime(CLOCK_MONOTONIC, &ts_start);
 		for(int countCol = 0; countCol < 320; countCol++){
 			
-			totwhite = get_pixel(240/2, countCol,3);
+			totwhite = get_pixel(240/2, countCol,3); //for err line 
+			
+			totredavg += get_pixel(cam_height/2, countCol,0); //for red sensor
+			totblueavg += get_pixel(cam_height/2, countCol,2);
+			
 			if(totwhite > threshold){
-				whiteArr[countCol] = 0;
+				whiteArr[countCol] = 0; //0 is white
 			} else {
-			whiteArr[countCol] = 1;	
+			whiteArr[countCol] = 1;	//1 is black
 			}
 			line_error += whiteArr[countCol] * (countCol-middleIndex);
+			lineCount += whiteArr[countCol];
 			}
+			//printf("\n\nLineCount: %d",lineCount);
+			if(lineCount < 50 ) { //0 might be too harsh for this - needs testing
+					reverseBool = 1; //if the line is not present reverse
+					return 0;
+			}
+			
+				
+			
 			clock_gettime(CLOCK_MONOTONIC, &ts_end);
 			long dt = (ts_end.tv_sec-ts_start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
-			prev_error = line_error;
-			err = (int)((line_error*kp) + ((line_error - prev_error) * kd/dt));
-					
-		    printf("\nwhiteness: %.1f red: %.1f blue: %.1f",totwhite);
-			for(int i = 0; i < cam_width; i++){
-				totredavg += get_pixel(240/2, countCol,0);
-				totblueavg += get_pixel(240/2, countCol,2);
-			} 
-			if (totred/cam_width > totblue/cam_width+30){
-				quadrant++;
-				printf("\n Next Quadrant now at quad: %d",quadrant);
+			
+			err = ((line_error*kp) + (((line_error - prev_error) * kd)/dt));
+			prev_error = line_error;		
+		    //printf("\nwhiteness: %.1f",totwhite);
+		    	totredavg /= cam_width;
+				totblueavg /= cam_width;
+				//printf("\n red: %.3f blue: %.3f",totredavg, totblueavg);
+				if (totredavg - totblueavg > 130){
+				quadrant = 3;
+				v_left = v_left_go;
+				v_right = v_right_go;
+				SetMotors();
+				//printf("\n Next Quadrant now at quad: %d",quadrant);
+				//printf("\n Threshold: %f", threshold);
+				return 0;
 			}  
-		}
-		if(quadrant == 3) {
-			double lineTurn = 0; //0 is left 1 is right
+		} else if(quadrant == 3) {	//quad3
+			totredavg =0;
+			totblueavg =0;
+			//printf("\ncurrent quadrant %d",quadrant);		
+			
+			double lineTurn = 0; //- is left + is right
 			int line3 = 0;
 			int middleIndex = (cam_width - 1)/2;
 			line_error = 0;
@@ -108,8 +149,12 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			clock_gettime(CLOCK_MONOTONIC, &ts_start);
 			
 			for(int countCol = 0; countCol < 320; countCol++){
+											
+				totwhite = get_pixel(240/2, countCol,3); //for err line 
 			
-				totwhite = get_pixel(240/2, countCol,3);
+				totredavg += get_pixel(cam_height/2, countCol,0); //for red sensor
+				totblueavg += get_pixel(cam_height/2, countCol,2);
+				
 				if(totwhite > threshold){
 					whiteArr[countCol] = 0;
 				} else {
@@ -126,30 +171,42 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					lineTurn = countCol;
 				} */
 			}
-			lineTurn = lineTurn/cam_width; // avg line pos 			
+			printf("\n\nline turn before avging: %.3f",lineTurn); //debug purpose
+			
+			totredavg /= cam_width;
+			totblueavg /= cam_width;
+			lineTurn = lineTurn/cam_width; // avg line pos - maybe this shouldnt be avged?	
+			printf("\n\nline turn AFTER avging: %.3f",lineTurn); //debug purpose		
 				
 				clock_gettime(CLOCK_MONOTONIC, &ts_end);
 				long dt = (ts_end.tv_sec-ts_start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
-				prev_error = line_error;
-				err = (int)((line_error*kp) + ((line_error - prev_error) * kd/dt));
-			if(line3 == 0) {
-				turnLeft();				
-			} else if (lineTurn > 0) {
-				turnRight();
-			} else if (lineTurn < 0) {
-				turnLeft();
-			}						
-				printf("\nwhiteness: %.1f red: %.1f blue: %.1f",totwhite);	
-					
-			for(int i = 0; i < cam_width; i++){
 				
-				totredavg += get_pixel(240/2, countCol,0);
-				totblueavg += get_pixel(240/2, countCol,2);
-				} 
-			if (totred/cam_width > totblue/cam_width+30){
-				quadrant++;
+				err = (int)((line_error*kp) + ((line_error - prev_error) * kd/dt));
+				prev_error = line_error;
+				printf("\nline3: %d lineTurn %.3f middleIndex: %d",line3,lineTurn,middleIndex);
+			if(line3 > 310) { //crossroad sensor
+				turnLeftBool =1;
+				printf("\nrobot is at a cross roads");
+							
+			} else if(line3 == 0) {
+				printf("\n Dead End");
+				deadEndBool =1;
+			} else if (lineTurn > cam_width/2 + 20) { // to turn based off avg line pos with wiggle room
+				turnRightBool =1;
+				printf("\nrobot wants to turn to the right"); //for debug
+			} else if (lineTurn < cam_width/2 + 20) { //to turn based off avg line pos with wiggle room
+				turnLeftBool =1;
+			}	printf("\nrobot wants to turn to the left"); //for debug					
+				printf("\n%d: Whiteness: %.1f red: %.1f blue: %.1f",quadrant,totwhite,totredavg,totblueavg);	
+					
+			if (totredavg - totblueavg > 130){
+				quadrant = 3;
+				v_left = v_left_go;
+				v_right = v_right_go;
+				SetMotors();
 				printf("\n Next Quadrant now at quad: %d",quadrant);
-			}  		
+			}
+		return 0;
 		}
 	
 	return 0;	
@@ -158,7 +215,7 @@ int Robot::SetMotors(){
 	
 	 set_motors(3, v_left);
 	 set_motors(5, v_right);
-	 printf("\n v_left: %d v_right: %d",v_left,v_right);
+	 printf("\nSet Motors: v_left: %d v_right: %d",v_left,v_right);
 	 hardware_exchange();
 	 
 	 return 0; 
@@ -169,63 +226,127 @@ int Robot::FollowLine(){
 	if(line_present == 1) {
 		//err = (int)(line_error*kp);
 		
-		
+		if(quadrant == 2) {
+			if(reverseBool == 1){ 
+					reverse();
+			}			
 		v_left = v_left_go + err;
 		v_right = v_right_go + err;
 		if(v_left > 65) {
 			v_left = 65;
 				
 		} else if(v_left < 30){
-			v_left = 30;
-				
+			v_left = 30;				
 		}
 		if(v_right > 65){
 				v_right = 65;
 		} else if(v_right < 30) {
 			v_right = 30;
 			}
-		printf(" \nline error: %.1f err: %d",line_error,err);
+		printf(" \nline error: %.1f err: %.3f",line_error,err);
 				
 		SetMotors();
-	} else {
-			printf("%nLine missing");			
-			turnAround();
-			sleep1(100);
-			SetMotors();
-			
+	} else if(quadrant == 3){
+		//printf("\ncurrent quadrant %d",quadrant);
+		if(turnLeftBool == 1) {
+		turnLeft();
+		turnLeftBool = 0;
+		printf("\n turning left");
+		printf(" \nline error: %.3f err: %.3f",line_error,err);
+		sleep1(60);	
+		} else if(turnRightBool == 1) {
+		turnRight();
+		turnRightBool = 0;	
+		printf("\nturning right");
+		printf(" \nline error: %.1f err: %.3f",line_error,err);
+		sleep1(60);
+		} else if(deadEndBool ==1) {
+			fullTurn();
+			deadEndBool =0;
+		} else {
+			v_left = v_left_go + err;
+		v_right = v_right_go + err;
+		if(v_left > 65) {
+			v_left = 65;
+				
+		} else if(v_left < 30){
+			v_left = 30;				
+		}
+		if(v_right > 65){
+				v_right = 65;
+		} else if(v_right < 30) {
+			v_right = 30;
+			}
+		printf(" \nline error: %.1f err: %.3f",line_error,err);
+		
+		
+		SetMotors();
+		}
+	} 
 	}
 	return 0;
 }
-int Robot::turnAround() {
-	if (v_left > 48){
-		v_left = 48 - (v_left-48);
+int Robot::reverse() {
+	/*if (v_left > 48){
+		v_left = 48 - (v_left_go-48);
 	} else {
-		v_left = 48 + (48 - v_left);
+		v_left = 48 + (48 - v_left_go);
 	}
 	if (v_right > 48){
-		v_right = 48 - (v_right-48);
+		v_right = 48 - (v_right_go-48);
 	} else {
-		v_right = 48 + (48 - v_right);
-	}
+		v_right = 48 + (48 - v_right_go);
+	} */
+	v_right = 51;
+	v_left = 42;
+	SetMotors();
+	printf("\n\nReversing now\n\n");
+	sleep1(300);
+	printf("\n\nReversing over\n\n");
+	reverseBool = 0;
+	//sleep1(2000);
 	
 	return 0;
 }
 void Robot::turnLeft() {
-		set_motors(5, 48);
-		set_motors(3, 52);
-		sleep1(600);
-		set_motors(5, v_right_go);
-		set_motors(3, v_left_go);
+		
+		v_left = 52;
+		v_right = 48;
+		SetMotors();
+		sleep1(200);
+		printf("turn over");
+		v_left = v_left_go;
+		v_right =v_right_go;
+		SetMotors();
+		
+		
 		
 }
 void Robot::turnRight() {
-		set_motors(5, v_right_go);
-		set_motors(3, v_left_go);
-		sleep1(600);
-		set_motors(5, v_right_go);
-		set_motors(3, v_left_go);
+		v_left = 48;
+		v_right = 44;
+		SetMotors();
+		sleep1(200);
+		printf("turn over");
+		v_left = v_left_go;
+		v_right =v_right_go;
+		SetMotors();
 		
 }
+void Robot::fullTurn() { //180 turn for quad 3 - need to test the sleep value
+		
+		v_left =48 -  (v_left_go - 48);
+		
+		v_right = 48 + (48 - v_right_go);
+		SetMotors();
+		sleep1(500); // this needs to be tested !!
+		v_left = v_left_go;
+		v_right = v_right_go;
+		SetMotors();
+		deadEndBool = 0;
+	
+}
+
 int Robot::InitHardware(){
 	init(0);
 	open_screen_stream();
@@ -242,7 +363,8 @@ int main() {
 	int courseOver = 0;
 	Robot robot;
 	robot.InitHardware();
-	robot.openGate();	
+	robot.openGate();
+	
 	
 	while(true){
 		//robot.MeasureLine();
@@ -257,4 +379,4 @@ int main() {
 		close_screen_stream();
 		//stoph();
 		return 0;
-} 
+}
