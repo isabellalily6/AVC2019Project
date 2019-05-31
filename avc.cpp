@@ -17,7 +17,7 @@ class Robot{
     const int v_left_go = 52;
     const int v_right_go = 45;
     double kp = 0.0003;
-    double kd = 0.0006;
+    double kd = 0.0007;
     double err;
     int line_present = 1;
     int prev_error;
@@ -301,7 +301,7 @@ int Robot::reverse() {
 	v_left = 40;
 	SetMotors();
 	printf("\n\nReversing now\n\n");
-	sleep1(600);
+	sleep1(300);
 	printf("\n\nReversing over\n\n");
 	reverseBool = 0;
 	//sleep1(2000);
