@@ -78,7 +78,7 @@ void Robot::turnRight() {
 		SetMotors();		
 }
 void Robot::fullTurn() {
-		v_left = 43;
+		v_left = 41;
 		v_right = 45;
 		SetMotors();
 		sleep1(3400);
