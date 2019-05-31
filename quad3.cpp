@@ -13,7 +13,7 @@ class Robot{
     double line_error =0;
     double leftLine_error = 0;
     double rightLine_error = 0;
-    int quadrant = 2;
+    int quadrant = 3;
     const int cam_width = 320;
     const int cam_height = 240;
     const int v_left_go = 52;
@@ -53,7 +53,7 @@ void Robot::openGate(){
 	v_right = 30;
 	SetMotors();
 	sleep1(2000);
-	quadrant = 2;
+	quadrant = 3;
 	v_left = v_left_go;
 	v_right = v_right_go;
 	SetMotors();
@@ -116,11 +116,12 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				totblueavg /= cam_width;
 				//printf("\n red: %.3f blue: %.3f",totredavg, totblueavg);
 				if (totredavg - totblueavg > 130){
-				quadrant = 2;
+				quadrant = 3;
 				v_left = v_left_go;
 				v_right = v_right_go;
 				SetMotors();
 				printf("\n Next Quadrant now at quad: %d",quadrant);
+				sleep1("300");
 				//printf("\n Threshold: %f", threshold);
 				return 0;
 			}
@@ -233,11 +234,12 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				printf("\n%d: Whiteness: %.1f red: %.1f blue: %.1f",quadrant,totwhite,totredavg,totblueavg);	
 					
 			if (totredavg - totblueavg > 130){
-				quadrant = 2;
+				quadrant = 3;
 				v_left = v_left_go;
 				v_right = v_right_go;
 				SetMotors();
 				printf("\n Next Quadrant now at quad: %d",quadrant);
+				sleep1(300);
 			}
 		return 0;
 		}
