@@ -132,11 +132,13 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				return 0;
 			}
 			//printf("\n\nLineCount: %d",lineCount);
+			printf("\n\n\nLineCount: %d\n\n\n",lineCount);
+			
 			
 			if(lineCount < 50 ) { //0 might be too harsh for this - needs testing
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
-			} else if (lineCount > 280){
+			} else if (lineCount > 290){
 			printf("\n\n\n Robot is at a cross road\n\n\n")	;
 			v_left = 38;
 			v_right = v_right_go - 5;
