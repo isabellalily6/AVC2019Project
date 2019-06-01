@@ -67,7 +67,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float whiteArr[cam_width];
 	float errorArray[cam_width];
 	int whiteBool = 0;
-	double threshold = 120;
+	double threshold = 50;
 	//double prevThresh = 100;
 	line_present = 1;
 		
