@@ -124,6 +124,13 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			line_error += whiteArr[countCol] * (countCol-middleIndex);
 			lineCount += whiteArr[countCol];
 			}
+			
+			clock_gettime(CLOCK_MONOTONIC, &ts_end);
+			
+			long dt = (ts_end.tv_sec-ts_start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
+			
+			err = ((line_error*kp) + (((line_error - prev_error) * kd)/dt));
+			prev_error = line_error;
 			/*
 			 * 
 			 * for vert loop
@@ -172,8 +179,8 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
-			} else if (lineCount < 50 && vertLineCount == 0){
-				printf("\n\n\n------\n\n\n\n\n ------ turn around over --------\n\n\n------\n\n\n\n\n\n\n\n");
+			} else if (lineCount < 50 && vertLineCount == 0 %% err < 1){
+				printf("\n\n\n------\n\n\n\n\n ------ turn around  --------\n\n\n------\n\n\n\n\n\n\n\n");
 				v_left = 38;
 				v_right = v_right_go - 5;
 				SetMotors();
@@ -214,7 +221,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				return 0;
 				
 				
-			}
+			} 
 		    //printf("\nwhiteness: %.1f",totwhite);
 			 
 		} else if(quadrant == 3) {	//quad3
