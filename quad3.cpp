@@ -210,7 +210,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				v_left = v_left_go;
 				v_right = v_right_go;
 				SetMotors();
-				sleep1(600);
+				sleep1(650);
 				return 0;
 				
 				
