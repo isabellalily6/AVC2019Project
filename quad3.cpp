@@ -144,7 +144,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 				vertLineCount += whiteArr[countRow];
 			}
-			printf(" \n\n\n\n\n\n\n\n\n\n\n\n\n vertLineCount: %d \n\n\n\n\n\n",vertLineCount);
+			printf(" \n\nn vertLineCount: %d \n\nn\n",vertLineCount);
 				
 				
 				
@@ -165,10 +165,10 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				return 0;
 			}
 			//printf("\n\nLineCount: %d",lineCount);
-			printf("\n\n\nLineCount: %d\n\n\n",lineCount);
+			printf("\n\nLineCount: %d\n\n",lineCount);
 			
 			
-			if(lineCount < 50  && vertLineCount > 4) { //0 might be too harsh for this - needs testing
+			if(lineCount < 50  && vertLineCount > 0) { //0 might be too harsh for this - needs testing
 					
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
