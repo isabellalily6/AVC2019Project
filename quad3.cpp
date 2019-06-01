@@ -67,7 +67,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float whiteArr[cam_width];
 	float errorArray[cam_width];
 	int whiteBool = 0;
-	double threshold = 50;
+	double threshold = 30;
 	//double prevThresh = 100;
 	line_present = 1;
 		
@@ -138,7 +138,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			if(lineCount < 50 ) { //0 might be too harsh for this - needs testing
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
-			} else if (lineCount > 270){
+			} else if (lineCount > 265){
 			printf("\n\n\n Robot is at a cross road\n\n\n")	;
 			v_left = 38;
 			v_right = v_right_go - 5;
