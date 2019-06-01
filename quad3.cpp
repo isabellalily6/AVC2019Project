@@ -11,6 +11,8 @@ class Robot{
 	int v_left, v_right, cam_tilt;
     int dv;
     double line_error =0;
+   int prevLineCount = 0;
+    
     double leftLine_error = 0;
     double rightLine_error = 0;
     int quadrant = 2;
@@ -92,6 +94,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	int middleIndex = (cam_width - 1)/2;
 	line_error = 0;
 	int lineCount = 0;
+	
 	struct timespec ts_start;
 	struct timespec deadStart;
 	struct timespec ts_end;
@@ -138,15 +141,21 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			if(lineCount < 50 ) { //0 might be too harsh for this - needs testing
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
-			} else if (lineCount > 265){
+			} else if (lineCount > 265 && lineCount - prevLineCount < 40;){
 			printf("\n\n\n Robot is at a cross road\n\n\n")	;
 			v_left = 38;
 			v_right = v_right_go - 5;
 			SetMotors();
 			sleep1(600);
-			} else {
-			clock_gettime(CLOCK_MONOTONIC, &deadEnd);	
+			} else if(lineCount > 265){
+				v_left = 48;
+				v_right = 48;
+				SetMotors();
+				sleep1(400);
+				
+				} else {clock_gettime(CLOCK_MONOTONIC, &deadEnd);	
 			}
+			prev_line_count = line_error;
 			long deadEndDt = (deadEnd.tv_sec-deadStart.tv_sec) * 1000000000 + deadEnd.tv_nsec-deadStart.tv_nsec;
 			printf("deadEndDt: ", deadEndDt);
 			
