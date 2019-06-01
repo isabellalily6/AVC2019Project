@@ -168,7 +168,14 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			printf("\n\nLineCount: %d\n\n",lineCount);
 			
 			
-			if(lineCount < 50  && vertLineCount > 0) { //0 might be too harsh for this - needs testing
+			if(vertLineCount > 85) {
+				v_left = v_left_go;
+				v_right = v_right_go;
+				SetMotors();
+				sleep1(600);
+				return 0;
+				
+			}else if(lineCount < 50  && vertLineCount > 0) { //0 might be too harsh for this - needs testing
 					
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
