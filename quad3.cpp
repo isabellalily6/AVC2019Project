@@ -12,6 +12,8 @@ class Robot{
     int dv;
     double line_error =0;
    int prevLineCount = 0;
+   struct timespec deadStart;
+   struct timespec deadEnd;
     
     double leftLine_error = 0;
     double rightLine_error = 0;
@@ -96,15 +98,13 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	int lineCount = 0;
 	
 	struct timespec ts_start;
-	struct timespec deadStart;
+	//struct timespec deadStart;
 	struct timespec ts_end;
-	struct timespec deadEnd;
+	
 	rightLine_error = 0;
 	leftLine_error = 0;
 	clock_gettime(CLOCK_MONOTONIC, &ts_start);
-	if(lineCount < 50) {
-		clock_gettime(CLOCK_MONOTONIC, &deadStart);
-	}
+	
 	
 		for(int countCol = 0; countCol < 320; countCol++){
 			
@@ -121,6 +121,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			line_error += whiteArr[countCol] * (countCol-middleIndex);
 			lineCount += whiteArr[countCol];
 			}
+			
 			totredavg /= cam_width;
 				totblueavg /= cam_width;
 				//printf("\n red: %.3f blue: %.3f",totredavg, totblueavg);
@@ -139,6 +140,11 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 			
 			if(lineCount < 50 ) { //0 might be too harsh for this - needs testing
+					if(deadStart == 0) {
+						
+					clock_gettime(CLOCK_MONOTONIC, &deadStart);
+	
+				} 
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
 			} else if (lineCount >= 260 && lineCount - prevLineCount < 40){
