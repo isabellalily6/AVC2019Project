@@ -173,6 +173,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
 			} else if (lineCount < 50){
+				
 				fullTurn();
 			} else if (lineCount >= 260 && lineCount - prevLineCount < 40){
 			printf("\n\n\n Robot is at a cross road\n\n\n")	;
@@ -186,7 +187,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				SetMotors();
 				sleep1(400);
 				
-			}
+			} else if(vertLineCount == 0 && lineCount > 50){
 			prevLineCount = lineCount;
 			
 			
@@ -198,7 +199,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			err = ((line_error*kp) + (((line_error - prev_error) * kd)/dt));
 			prev_error = line_error;		
 		    //printf("\nwhiteness: %.1f",totwhite);
-		    	  
+			} 
 		} else if(quadrant == 3) {	//quad3
 			totredavg =0;
 			totblueavg =0;
