@@ -12,10 +12,7 @@ class Robot{
     int dv;
     double line_error =0;
    int prevLineCount = 0;
-   struct timespec deadStart;
-   struct timespec deadEnd;
-   int deadTimeStartBool = 0;
-   //int deadTimeEndBool = 0;
+   
     
     double leftLine_error = 0;
     double rightLine_error = 0;
@@ -68,11 +65,14 @@ void Robot::openGate(){
 int Robot::MeasureLine(){ //only coded for quad 2 rn
 	
 	float totwhite = 0;	
+	float vertWhite = 0;
 	float totredavg = 0;
 	float totblueavg =0;
 	float whiteArr[cam_width];
+	float vertWhiteArr[cam_height];
 	float errorArray[cam_width];
 	int whiteBool = 0;
+	
 	double threshold = 60;
 	//double prevThresh = 100;
 	line_present = 1;
@@ -98,6 +98,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	int middleIndex = (cam_width - 1)/2;
 	line_error = 0;
 	int lineCount = 0;
+	int vertLineCount = 0;
 	
 	struct timespec ts_start;
 	//struct timespec deadStart;
@@ -123,6 +124,32 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			line_error += whiteArr[countCol] * (countCol-middleIndex);
 			lineCount += whiteArr[countCol];
 			}
+			/*
+			 * 
+			 * for vert loop
+			 * 
+			 * 
+			 */
+			
+			for(int countRow = 0; countRow < cam_height; countRow++){
+				
+				vertWhite = get_pixel(countRow, cam_width/2 ,3); //for err line
+				
+				if(totwhite > threshold){
+					vertWhiteArr[countRow] = 0; //0 is white
+				} else {
+					vertWhiteArr[countRow] = 1;	//1 is black
+				}
+			
+			
+				vertLineCount += whiteArr[countRow];
+			}
+			printf(" \n\n\n\n\n\n\n\n\n\n\n\n\n vertLineCount: %d \n\n\n\n\n\n",vertLineCount);
+				
+				
+				
+			
+			
 			
 			totredavg /= cam_width;
 				totblueavg /= cam_width;
@@ -142,12 +169,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 			
 			if(lineCount < 50 ) { //0 might be too harsh for this - needs testing
-					if(deadTimeStartBool == 0) {
-						
-					clock_gettime(CLOCK_MONOTONIC, &deadStart);
-					deadTimeStartBool = 1;
-	
-				} 
+					
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
 			} else if (lineCount >= 260 && lineCount - prevLineCount < 40){
@@ -162,18 +184,10 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				SetMotors();
 				sleep1(400);
 				
-				} else {
-					clock_gettime(CLOCK_MONOTONIC, &deadEnd);	
-					deadTimeStartBool = 0;
 			}
 			prevLineCount = lineCount;
-			long deadEndDt = (deadEnd.tv_sec-deadStart.tv_sec) * 1000000000 + deadEnd.tv_nsec-deadStart.tv_nsec;
-			deadEndDt /= 1000000000;
-			if(deadEndDt > 3) {
-				fullTurn();
-				return 0;
-			}
-			printf("deadEndDt: %.5f", deadEndDt);
+			
+			
 			
 			clock_gettime(CLOCK_MONOTONIC, &ts_end);
 			
