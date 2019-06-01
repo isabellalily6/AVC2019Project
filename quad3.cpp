@@ -14,6 +14,8 @@ class Robot{
    int prevLineCount = 0;
    struct timespec deadStart;
    struct timespec deadEnd;
+   int deadStartBool = 0;
+   int deadEndBool = 0;
     
     double leftLine_error = 0;
     double rightLine_error = 0;
@@ -140,9 +142,10 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 			
 			if(lineCount < 50 ) { //0 might be too harsh for this - needs testing
-					if(deadStart == 0) {
+					if(deadStartBool == 0) {
 						
 					clock_gettime(CLOCK_MONOTONIC, &deadStart);
+					deadStartBool = 1;
 	
 				} 
 					reverseBool = 1; //if the line is not present reverse
@@ -159,7 +162,9 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				SetMotors();
 				sleep1(400);
 				
-				} else {clock_gettime(CLOCK_MONOTONIC, &deadEnd);	
+				} else {
+					clock_gettime(CLOCK_MONOTONIC, &deadEnd);	
+					deadEndBool = 0;
 			}
 			prevLineCount = lineCount;
 			long deadEndDt = (deadEnd.tv_sec-deadStart.tv_sec) * 1000000000 + deadEnd.tv_nsec-deadStart.tv_nsec;
