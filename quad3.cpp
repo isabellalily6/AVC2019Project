@@ -155,7 +155,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				
 				} else {clock_gettime(CLOCK_MONOTONIC, &deadEnd);	
 			}
-			prev_line_count = line_error;
+			prevLineCount = lineCount;
 			long deadEndDt = (deadEnd.tv_sec-deadStart.tv_sec) * 1000000000 + deadEnd.tv_nsec-deadStart.tv_nsec;
 			printf("deadEndDt: ", deadEndDt);
 			
