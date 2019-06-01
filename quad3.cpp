@@ -412,11 +412,11 @@ void Robot::turnRight() {
 		SetMotors();		
 }
 void Robot::fullTurn() {
-		v_left = 41;
-		v_right = 45;
+		v_left = 44;
+		v_right = 52;
 		SetMotors();
 		sleep1(2400);
-		printf("turn around over");
+		printf("\n\n\n------\n\n\n\n\n ------ turn around over --------\n\n\n------\n\n\n\n\n\n\n\n");
 		v_left = v_left_go;
 		v_right =v_right_go;
 		SetMotors();		
