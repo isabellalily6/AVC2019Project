@@ -179,7 +179,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
-			} else if (lineCount < 50 && vertLineCount == 0 %% err < 1){
+			} else if (lineCount < 50 && vertLineCount == 0 && err < 1){
 				printf("\n\n\n------\n\n\n\n\n ------ turn around  --------\n\n\n------\n\n\n\n\n\n\n\n");
 				v_left = 38;
 				v_right = v_right_go - 5;
@@ -206,12 +206,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 			
 			
-			clock_gettime(CLOCK_MONOTONIC, &ts_end);
 			
-			long dt = (ts_end.tv_sec-ts_start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
-			
-			err = ((line_error*kp) + (((line_error - prev_error) * kd)/dt));
-			prev_error = line_error;	
 			if(err > 2.6 && vertLineCount > 95)	{
 			
 				v_left = v_left_go;
