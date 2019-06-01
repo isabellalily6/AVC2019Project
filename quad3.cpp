@@ -93,10 +93,16 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	line_error = 0;
 	int lineCount = 0;
 	struct timespec ts_start;
+	struct timespec deadStart;
 	struct timespec ts_end;
+	struct timespec deadEnd;
 	rightLine_error = 0;
 	leftLine_error = 0;
 	clock_gettime(CLOCK_MONOTONIC, &ts_start);
+	if(lineCount < 50) {
+		clock_gettime(CLOCK_MONOTONIC, &deadStart);
+	}
+	
 		for(int countCol = 0; countCol < 320; countCol++){
 			
 			totwhite = get_pixel(240/2, countCol,3); //for err line 
@@ -126,6 +132,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				return 0;
 			}
 			//printf("\n\nLineCount: %d",lineCount);
+			
 			if(lineCount < 50 ) { //0 might be too harsh for this - needs testing
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
@@ -135,11 +142,14 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			v_right = v_right_go - 5;
 			SetMotors();
 			sleep1(600);
+			} else {
+			clock_gettime(CLOCK_MONOTONIC, &deadEnd);	
 			}
-			
-				
+			long deadEndDt = (deadEnd.tv_sec-deadStart.tv_sec) * 1000000000 + deadEnd.tv_nsec-deadStart.tv_nsec;
+			printf("deadEndDt: ", deadEndDt);
 			
 			clock_gettime(CLOCK_MONOTONIC, &ts_end);
+			
 			long dt = (ts_end.tv_sec-ts_start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
 			
 			err = ((line_error*kp) + (((line_error - prev_error) * kd)/dt));
