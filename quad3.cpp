@@ -49,8 +49,8 @@ void Robot::openGate(){
 	send_to_server(message);
 	receive_from_server(password);
 	send_to_server(password);
-	v_left = 64;
-	v_right = 30;
+	v_left = 52;
+	v_right = 44;
 	SetMotors();
 	sleep1(2000);
 	quadrant = 2;
@@ -116,7 +116,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				totblueavg /= cam_width;
 				//printf("\n red: %.3f blue: %.3f",totredavg, totblueavg);
 				if (totredavg - totblueavg > 130){
-				quadrant = 3;
+				quadrant = 2;
 				v_left = v_left_go;
 				v_right = v_right_go;
 				SetMotors();
@@ -395,7 +395,7 @@ int main() {
 	int courseOver = 0;
 	Robot robot;
 	robot.InitHardware();
-	robot.openGate();
+	//robot.openGate();
 	
 	
 	while(true){
