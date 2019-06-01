@@ -168,6 +168,11 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			}
 			prevLineCount = lineCount;
 			long deadEndDt = (deadEnd.tv_sec-deadStart.tv_sec) * 1000000000 + deadEnd.tv_nsec-deadStart.tv_nsec;
+			deadEndDt /= 1000000000;
+			if(deadEndDt > 1.5) {
+				fullTurn();
+				return 0;
+			}
 			printf("deadEndDt: %.5f", deadEndDt);
 			
 			clock_gettime(CLOCK_MONOTONIC, &ts_end);
