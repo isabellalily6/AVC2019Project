@@ -129,7 +129,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 			long dt = (ts_end.tv_sec-ts_start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
 			
-			err = ((line_error*kp) + (((line_error - prev_error) * kd)/dt));
+			err = ((line_error*kp) + (kd * ((line_error - prev_error)/dt))));
 			prev_error = line_error;
 			/*
 			 * 
@@ -138,7 +138,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			 * 
 			 */
 			
-			for(int countRow = 0; countRow < cam_height; countRow++){
+			for(int countRow = 120; countRow < cam_height; countRow++){
 				
 				vertWhite = get_pixel(countRow, cam_width/2 ,3); //for err line
 				
@@ -179,7 +179,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
-			} else if (lineCount < 50 && vertLineCount == 0 && err == 0){
+			} else if (lineCount == 0 && vertLineCount == 0 && err == 0){
 				printf("\n\n\n------\n\n\n\n\n ------ 123 turn around 123  --------\n\n\n------\n\n\n\n\n\n\n\n");
 				v_left = 38;
 				v_right = v_right_go - 5;
