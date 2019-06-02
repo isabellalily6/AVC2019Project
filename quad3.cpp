@@ -214,7 +214,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 			
 			
-			if(err > 4 && vertLineCount > 50 && lineCount > 100 && lineCount < 200)	{
+			if(err > 4 && vertLineCount > 50 && lineCount > 120 && lineCount < 160)	{
 				printf("\n\n\n\n\n\n\n\n\n\n\n*****************************************************\n\n\n\n\n\n\n\n\n\n\n\nInching forwards ...");
 			
 				v_left = v_left_go + 1;
