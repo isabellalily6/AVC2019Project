@@ -19,8 +19,8 @@ class Robot{
     int quadrant = 2;
     const int cam_width = 320;
     const int cam_height = 240;
-    const int v_left_go = 48;
-    const int v_right_go = 48;
+    const int v_left_go = 50;
+    const int v_right_go = 46;
     double kp = 0.0005;
     double kd = 0.0009;
     double err;
@@ -183,7 +183,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
-			} else if (lineCount == 0 && vertLineCount == 0 && err == 0 && prevErr < 2.5){
+			} else if (lineCount == 0 && vertLineCount == 0 && err == 0 && prevErr < 4{
 				printf("\n\n\n------\n\n\n\n\n ------ 123 turn around 123  --------\n\n\n------\n\n\n\n\n\n\n\n");
 				printf("\nerr: %.5f preverror: %.5f",err, prevErr);
 				v_left = 38;
@@ -367,7 +367,7 @@ int Robot::FollowLine(){
 		} else if(v_right < 30) {
 			v_right = 30;
 			}
-		printf(" \nline error: %.1f err: %.3f",line_error,err);
+		//printf(" \nline error: %.1f err: %.3f",line_error,err);
 				
 		SetMotors();
 	} else if(quadrant == 3){
