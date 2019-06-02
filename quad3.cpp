@@ -184,7 +184,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
-			} else if (lineCount == 0 && vertLineCount == 0 && err == 0 && prevErr < 4){
+			} else if (lineCount == 0 && vertLineCount == 0 && err == 0 && prevErr < 2){
 				printf("\n\n\n------\n\n\n\n\n ------ 123 turn around 123  --------\n\n\n------\n\n\n\n\n\n\n\n");
 				
 				v_left = 38;
