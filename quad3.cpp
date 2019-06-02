@@ -22,7 +22,7 @@ class Robot{
     const int v_left_go = 51;
     const int v_right_go = 45;
     double kp = 0.0006;
-    double kd = 0.0005;
+    double kd = 0.0008;
     double err;
     double prevErr = 0;
     int line_present = 1;
