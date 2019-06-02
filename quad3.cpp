@@ -134,6 +134,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			err = ((line_error*kp) + (kd * ((line_error - prev_error)/dt)));
 			prev_error = line_error;
 			prevErr = err;
+			printf("\nerr: %.5f preverror: %.5f",err, prevErr);
 			/*
 			 * 
 			 * for vert loop
@@ -185,7 +186,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					return 0;
 			} else if (lineCount == 0 && vertLineCount == 0 && err == 0 && prevErr < 4){
 				printf("\n\n\n------\n\n\n\n\n ------ 123 turn around 123  --------\n\n\n------\n\n\n\n\n\n\n\n");
-				printf("\nerr: %.5f preverror: %.5f",err, prevErr);
+				
 				v_left = 38;
 				v_right = v_right_go - 5;
 				SetMotors();
@@ -212,13 +213,13 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 			
 			
-			if(err > 4 && vertLineCount > 50)	{
+			if(err > 2.75 && vertLineCount > 50 && lineCount > 120)	{
 				printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nInching forwards ...");
 			
 				v_left = v_left_go;
 				v_right = v_right_go;
 				SetMotors();
-				sleep1(300);
+				sleep1(600);
 				return 0;
 				
 				
