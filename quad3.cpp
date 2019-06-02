@@ -180,11 +180,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			printf("\n\nLineCount: %d\n\n",lineCount);
 			
 			
-			/*else*/ if(lineCount < 50  && vertLineCount > 0) { //0 might be too harsh for this - needs testing
-					
-					reverseBool = 1; //if the line is not present reverse
-					return 0;
-			} else if (lineCount == 0 && vertLineCount == 0 && err == 0 && prevErr < 2){
+			if (lineCount == 0 && vertLineCount == 0 && err == 0 && prevErr < 2){
 				printf("\n\n\n------\n\n\n\n\n ------ 123 turn around 123  --------\n\n\n------\n\n\n\n\n\n\n\n");
 				
 				v_left = 38;
@@ -195,6 +191,10 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				v_right = 48;
 				SetMotors();
 				sleep1(1000);
+			}else if(lineCount < 50  && vertLineCount > 0) { //0 might be too harsh for this - needs testing
+					
+					reverseBool = 1; //if the line is not present reverse
+					return 0;
 			} else if ((lineCount >= 250 && (err < 1 || err > 5) && (lineCount - prevLineCount) < 50) || lineCount > 300){
 			printf("\n------------------------------------------------------------------------------------\n\n\n\n Robot is at a cross road\n\n\n\n\n")	;
 			v_left = v_left_go;
