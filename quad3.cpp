@@ -213,6 +213,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 			
 			if(err > 3 && vertLineCount > 50)	{
+				printf("\n\n\n\nInching forwards ...");
 			
 				v_left = v_left_go;
 				v_right = v_right_go;
