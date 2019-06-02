@@ -196,9 +196,9 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			v_left = v_left_go;
 			v_right = v_right_go;
 			SetMotors();
-			sleep1(400);
+			sleep1(350);
 			v_left = 38;
-			v_right = v_right_go - 5;
+			v_right = v_right_go - 4;
 			SetMotors();
 			sleep1(600);
 			printf("\nturned left");
