@@ -196,7 +196,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			v_left = v_left_go;
 			v_right = v_right_go;
 			SetMotors();
-			sleep1(450);
+			sleep1(400);
 			v_left = 38;
 			v_right = v_right_go - 5;
 			SetMotors();
@@ -214,8 +214,8 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 			
 			
-			if(err > 2.75 && vertLineCount > 50 && lineCount > 120 && lineCount < 210)	{
-				printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nInching forwards ...");
+			if(err > 4 && vertLineCount > 50 && lineCount > 100 && lineCount < 200)	{
+				printf("\n\n\n\n\n\n\n\n\n\n\n*****************************************************\n\n\n\n\n\n\n\n\n\n\n\nInching forwards ...");
 			
 				v_left = v_left_go + 1;
 				v_right = v_right_go - 1;
