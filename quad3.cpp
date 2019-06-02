@@ -19,8 +19,8 @@ class Robot{
     int quadrant = 2;
     const int cam_width = 320;
     const int cam_height = 240;
-    const int v_left_go = 48;
-    const int v_right_go = 48;
+    const int v_left_go = 51;
+    const int v_right_go = 45;
     double kp = 0.0005;
     double kd = 0.0009;
     double err;
@@ -179,7 +179,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			printf("\n\nLineCount: %d\n\n",lineCount);
 			
 			
-			/*else*/ if(lineCount < 50  && vertLineCount > 0) { //0 might be too harsh for this - needs testing
+			/*else*/ if(lineCount < 45  && vertLineCount > 0) { //0 might be too harsh for this - needs testing
 					
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
@@ -190,7 +190,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				v_right = v_right_go - 5;
 				SetMotors();
 				sleep1(1400);
-			} else if (lineCount >= 270 && lineCount - prevLineCount < 60){
+			} else if (lineCount >= 230 && lineCount - prevLineCount < 60 && err> 5){
 			printf("\n\n\n Robot is at a cross road\n\n\n")	;
 			v_left = v_left_go;
 			v_right = v_right_go;
