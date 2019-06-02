@@ -141,7 +141,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			 * 
 			 */
 			
-			for(int countRow = 120; countRow < cam_height; countRow++){
+			for(int countRow = 0; countRow < cam_height; countRow++){
 				
 				vertWhite = get_pixel(countRow, cam_width/2 ,3); //for err line
 				//printf("\n\n\n\nVERTtotwhite: %.5f",vertWhite);
@@ -212,7 +212,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 			
 			
-			if(err > 3 && vertLineCount > 50)	{
+			if(err > 4 && vertLineCount > 50)	{
 				printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nInching forwards ...");
 			
 				v_left = v_left_go;
