@@ -132,8 +132,8 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			long dt = (ts_end.tv_sec-ts_start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
 			
 			err = ((line_error*kp) + (kd * ((line_error - prev_error)/dt)));
-			prev_error = line_error;
-			prevErr = err;
+			
+			
 			printf("\nerr: %.5f preverror: %.5f",err, prevErr);
 			/*
 			 * 
@@ -191,7 +191,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				v_right = v_right_go - 5;
 				SetMotors();
 				sleep1(1400);
-			} else if (lineCount >= 180 && (err < 1 || err > 3.8) && (lineCount - prevLineCount) < 50){
+			} else if (lineCount >= 195 && (err < 1 || err > 3.8) && (lineCount - prevLineCount) < 50){
 			printf("\n------------------------------------------------------------------------------------\n\n\n\n Robot is at a cross road\n\n\n\n\n")	;
 			v_left = v_left_go;
 			v_right = v_right_go;
@@ -202,19 +202,19 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			SetMotors();
 			sleep1(600);
 			printf("\nturned left");
-			} else if(lineCount >= 180){
+			} else if(lineCount >= 195){
 				v_left = 48;
 				v_right = 48;
 				SetMotors();
 				sleep1(400);
 				
 			}
-			prevLineCount = lineCount;
 			
 			
 			
 			
-			if(err > 4 && vertLineCount > 50 && lineCount > 120 && lineCount < 160)	{
+			
+			if(err > 4 && vertLineCount > 50 && lineCount > 120 && lineCount < 195)	{
 				printf("\n\n\n\n\n\n\n\n\n\n\n*****************************************************\n\n\n\n\n\n\n\n\n\n\n\nInching forwards ...");
 			
 				v_left = v_left_go + 1;
@@ -227,6 +227,9 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			} 
 		    //printf("\nwhiteness: %.1f",totwhite);
 			 printf("\n new pic :");
+			 prevLineCount = lineCount;
+			 prevErr = err;
+			 prev_error = line_error;
 		} else if(quadrant == 3) {	//quad3
 			totredavg =0;
 			totblueavg =0;
