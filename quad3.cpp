@@ -24,6 +24,7 @@ class Robot{
     double kp = 0.0003;
     double kd = 0.0007;
     double err;
+    double prevErr = 0;
     int line_present = 1;
     int prev_error;
     int turnLeftBool = 0;
@@ -131,6 +132,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 			err = ((line_error*kp) + (kd * ((line_error - prev_error)/dt)));
 			prev_error = line_error;
+			prevErr = err;
 			/*
 			 * 
 			 * for vert loop
@@ -179,8 +181,9 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
-			} else if (lineCount == 0 && vertLineCount == 0 && err == 0){
+			} else if (lineCount == 0 && vertLineCount == 0 && err == 0 && prevErr < 2){
 				printf("\n\n\n------\n\n\n\n\n ------ 123 turn around 123  --------\n\n\n------\n\n\n\n\n\n\n\n");
+				printf("\nerr: %.5f preverror: %.5f",err, prevErr)
 				v_left = 38;
 				v_right = v_right_go - 5;
 				SetMotors();
