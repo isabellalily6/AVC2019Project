@@ -213,8 +213,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				v_right = 48;
 				SetMotors();
 				sleep1(400);
-				
-				
+							
 			}
 			
 			
@@ -437,7 +436,7 @@ int Robot::reverse() {
 	v_left = 42;
 	SetMotors();
 	printf("\n\nReversing now\n\n");
-	sleep1(300);
+	sleep1(400);
 	printf("\n\nReversing over\n\n");
 	reverseBool = 0;
 	//sleep1(2000);
