@@ -129,7 +129,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 			long dt = (ts_end.tv_sec-ts_start.tv_sec) * 1000000000 + ts_end.tv_nsec-ts_start.tv_nsec;
 			
-			err = ((line_error*kp) + (kd * ((line_error - prev_error)/dt))));
+			err = ((line_error*kp) + (kd * ((line_error - prev_error)/dt)));
 			prev_error = line_error;
 			/*
 			 * 
