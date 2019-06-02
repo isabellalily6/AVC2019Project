@@ -183,7 +183,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
-			} else if (lineCount == 0 && vertLineCount == 0 && err == 0 && prevErr < 2){
+			} else if (lineCount == 0 && vertLineCount == 0 && err == 0 && prevErr < 2.5){
 				printf("\n\n\n------\n\n\n\n\n ------ 123 turn around 123  --------\n\n\n------\n\n\n\n\n\n\n\n");
 				printf("\nerr: %.5f preverror: %.5f",err, prevErr);
 				v_left = 38;
@@ -212,17 +212,17 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 			
 			
-			if(err > 3 && vertLineCount > 50)	{
+			/*if(err > 3 && vertLineCount > 50 && )	{
 				printf("\n\n\n\nInching forwards ...");
 			
 				v_left = v_left_go;
 				v_right = v_right_go;
 				SetMotors();
-				sleep1(300);
+				sleep1(200);
 				return 0;
 				
 				
-			} 
+			} */
 		    //printf("\nwhiteness: %.1f",totwhite);
 			 
 		} else if(quadrant == 3) {	//quad3
