@@ -214,7 +214,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 			
 			
-			if(err > 4 && vertLineCount > 50 && lineCount > 120 && lineCount < 195)	{
+			/*if(err > 4 && vertLineCount > 50 && lineCount > 120 && lineCount < 195)	{
 				printf("\n\n\n\n\n\n\n\n\n\n\n*****************************************************\n\n\n\n\n\n\n\n\n\n\n\nInching forwards ...");
 			
 				v_left = v_left_go + 1;
@@ -224,7 +224,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				return 0;
 				
 				
-			} 
+			} */
 		    //printf("\nwhiteness: %.1f",totwhite);
 			 printf("\n new pic :");
 			 prevLineCount = lineCount;
