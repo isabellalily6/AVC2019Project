@@ -112,7 +112,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	
 		for(int countCol = 0; countCol < 320; countCol++){
 			
-			totwhite = get_pixel(240/2, countCol,3); //for err line 
+			//totwhite = get_pixel(240/2, countCol,3); //for err line 
 			printf("\n\n\n\ntotwhite: %.5f",totwhite);
 			
 			totredavg += get_pixel(cam_height/2, countCol,0); //for red sensor
@@ -144,7 +144,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			for(int countRow = 120; countRow < cam_height; countRow++){
 				
 				vertWhite = get_pixel(countRow, cam_width/2 ,3); //for err line
-				printf("\n\n\n\nVERTtotwhite: %.5f",vertWhite);
+				//printf("\n\n\n\nVERTtotwhite: %.5f",vertWhite);
 				
 				if(totwhite > threshold){
 					vertWhiteArr[countRow] = 0; //0 is white
@@ -212,12 +212,12 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 			
 			
-			if(err > 2.6 && vertLineCount > 95)	{
+			if(err > 3 && vertLineCount > 50)	{
 			
 				v_left = v_left_go;
 				v_right = v_right_go;
 				SetMotors();
-				sleep1(650);
+				sleep1(300);
 				return 0;
 				
 				
