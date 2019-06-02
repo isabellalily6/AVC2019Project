@@ -225,7 +225,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				
 			} 
 		    //printf("\nwhiteness: %.1f",totwhite);
-			 printf("\n new pic :")
+			 printf("\n new pic :");
 		} else if(quadrant == 3) {	//quad3
 			totredavg =0;
 			totblueavg =0;
