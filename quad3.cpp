@@ -144,7 +144,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			for(int countRow = 120; countRow < cam_height; countRow++){
 				
 				vertWhite = get_pixel(countRow, cam_width/2 ,3); //for err line
-				printf("\n\n\n\nVERTtotwhite: %.5f"vertWhite);
+				printf("\n\n\n\nVERTtotwhite: %.5f",vertWhite);
 				
 				if(totwhite > threshold){
 					vertWhiteArr[countRow] = 0; //0 is white
