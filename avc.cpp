@@ -149,7 +149,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			 */
 			for(int countCol = 0; countCol < 320; countCol++){
 			
-			totwhite = get_pixel(240/2, countCol,3); //for err line 
+			totwhite = get_pixel(1, countCol,3); //for err line 
 			//printf("\n\n\n\ntotwhite: %.5f",totwhite);
 			
 			
