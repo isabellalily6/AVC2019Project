@@ -71,7 +71,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float vertWhiteArr[cam_height];
 	
 	int whiteBool = 0;	
-	double threshold = 60;
+	double threshold = 80;
 	//double prevThresh = 100;
 	
 		
@@ -189,7 +189,9 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				v_right = 48;
 				SetMotors();
 				sleep1(400);
-				xroadBool = 1;							
+				if(lineCount > 230){
+				xroadBool = 1;		
+			}					
 			}
 			 printf("\n new pic :");
 			 prevLineCount = lineCount;
