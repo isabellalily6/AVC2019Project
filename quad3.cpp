@@ -168,7 +168,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				totredavg /= cam_width;
 				totblueavg /= cam_width;
 				//printf("\n red: %.3f blue: %.3f",totredavg, totblueavg);
-				if (totredavg - totblueavg > 130){
+				/*if (totredavg - totblueavg > 130){
 				quadrant = 2;
 				v_left = v_left_go;
 				v_right = v_right_go;
@@ -177,7 +177,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				sleep1(300);
 				//printf("\n Threshold: %f", threshold);
 				return 0;
-			}
+			}*/
 			//printf("\n\nLineCount: %d",lineCount);
 			printf("\n\nLineCount: %d\n\n",lineCount);
 			if(err > 1) {
@@ -203,7 +203,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
-			} else if ((lineCount >= 230 && (err < 1 || err > 5) && (lineCount - prevLineCount) < 50) || lineCount > 300){
+			} else if ((lineCount >= 230 && (err < 1 || err > 5.25) && (lineCount - prevLineCount) < 50) || lineCount > 300){
 			printf("\n------------------------------------------------------------------------------------\n\n\n\n Robot is at a cross road\n\n\n\n\n")	;
 			v_left = v_left_go;
 			v_right = v_right_go;
