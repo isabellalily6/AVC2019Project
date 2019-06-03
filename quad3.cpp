@@ -26,6 +26,7 @@ class Robot{
     double err;
     double prevErr = 0;
     int line_present = 1;
+    int corner = 0;
     int prev_error;
     int turnLeftBool = 0;
     int turnRightBool = 0;
@@ -64,6 +65,7 @@ void Robot::openGate(){
 }
 
 int Robot::MeasureLine(){ //only coded for quad 2 rn
+	
 	
 	float totwhite = 0;	
 	float vertWhite = 0;
@@ -178,9 +180,15 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			}
 			//printf("\n\nLineCount: %d",lineCount);
 			printf("\n\nLineCount: %d\n\n",lineCount);
+			if(err > 1) {
+				corner = 1;
+			}
+			if(vertLineCount > 50 && err < 1 && lineCount < 130){
+			corner = 0;	
+			}
 			
 			
-			if (lineCount == 0 && vertLineCount == 0 && err == 0 && prevErr < 2){
+			if (lineCount < 20 && vertLineCount < 20 && err == 0 && prevErr < 1 && corner == 0){
 				printf("\n\n\n------\n\n\n\n\n ------ 123 turn around 123  --------\n\n\n------\n\n\n\n\n\n\n\n");
 				
 				v_left = 38;
