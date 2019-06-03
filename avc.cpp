@@ -170,7 +170,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
-			} else if ((lineCount >= 215 && (err < 1 || err > 5.25) && (lineCount - prevLineCount) < 50 && xroadBool == 1) || lineCount > 280){
+			} else if ((lineCount >= 220 && (err < 1 || err > 5.25) && (lineCount - prevLineCount) < 50 && xroadBool == 1) || lineCount > 280){
 			printf("\n------------------------------------------------------------------------------------\n\n\n\n Robot is at a cross road\n\n\n\n\n")	;
 			v_left = v_left_go;
 			v_right = v_right_go;
@@ -183,15 +183,13 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			xroadBool = 0;
 			printf("\nturned left");
 			return 0;
-			} else if(lineCount >= 200){
-				
+			} else if(lineCount >= 200){				
 				printf("\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n\n lemme think\n\n\n");
 				v_left = 48;
 				v_right = 48;
 				SetMotors();
 				sleep1(400);
-				xroadBool = 1;
-							
+				xroadBool = 1;							
 			}
 			 printf("\n new pic :");
 			 prevLineCount = lineCount;
