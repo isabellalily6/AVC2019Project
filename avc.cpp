@@ -200,7 +200,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				v_right = 48;
 				SetMotors();
 				sleep1(1000);
-			}else if(lineCount < 50  && vertLineCount > 0) { //0 might be too harsh for this - needs testing
+			}else if((lineCount < 50  && vertLineCount > 0) || (corner == 1 && lineCount < 50 && vertLineCount < 50) ) { //0 might be too harsh for this - needs testing
 					
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
