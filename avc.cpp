@@ -45,8 +45,8 @@ class Robot{
     const int cam_height = 240;
     const int v_left_go = 50;
     const int v_right_go = 46;
-    double kp = 0.0005;
-    double kd = 0.003;
+    double kp = 0.0008;
+    double kd = 0.0007;
     double err;
     double prevErr = 0;
     
@@ -95,7 +95,11 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float whiteArr[cam_width];
 	float vertWhiteArr[cam_height];
 	
-	double threshold = 80;
+	double threshold = 0;
+	for(int i = 0; i < cam_width; i++){
+		threshold += get_pixel(120,i,3);
+	}
+	threshold /= cam_width;
 	//double prevThresh = 100;
 	
 		
@@ -114,6 +118,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	struct timespec ts_end;
 	
 	clock_gettime(CLOCK_MONOTONIC, &ts_start);
+	
 	
 	
 		for(int countCol = 0; countCol < 320; countCol++){
@@ -283,7 +288,7 @@ int Robot::InitHardware(){
 	init(0);
 	open_screen_stream();
 	take_picture();
-	update_screen();
+	//update_screen();
 	
 	v_left = v_left_go;
 	v_right = v_right_go;
@@ -305,7 +310,7 @@ int main() {
 		//robot.MeasureLine();
 		robot.FollowLine();
 		take_picture();
-		update_screen();
+		//update_screen();
 		
 		if(courseOver == 1){
 				break;
