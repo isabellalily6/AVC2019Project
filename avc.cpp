@@ -6,6 +6,31 @@
 //og size 240,320
 //camera has a 6:8 ratio
 //todo add line present thingy
+
+/*
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 		------- TODO before test ---------
+ * 			- add back q1 code
+ * 			
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
 class Robot{
 	private:
 	int v_left, v_right, cam_tilt;
