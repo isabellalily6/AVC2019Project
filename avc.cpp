@@ -46,7 +46,7 @@ class Robot{
     const int v_left_go = 50;
     const int v_right_go = 46;
     double kp = 0.0007;
-    double kd = 0.009;
+    double kd = 0.005;
     double err;
     double prevErr = 0;
     
@@ -95,7 +95,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float whiteArr[cam_width];
 	float vertWhiteArr[cam_height];
 	
-	double threshold = 100;
+	double threshold = 110;
 	/*for(int i = 0; i < cam_width; i++){
 		threshold += get_pixel(120,i,3);
 	}
