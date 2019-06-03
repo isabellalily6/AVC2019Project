@@ -215,7 +215,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			sleep1(700);
 			printf("\nturned left");
 			return 0;
-			} else if(lineCount >= 230){
+			} else if(lineCount >= 200){
 				printf("\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n\n lemme think\n\n\n");
 				v_left = 48;
 				v_right = 48;
