@@ -194,7 +194,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				v_left = 38;
 				v_right = v_right_go - 5;
 				SetMotors();
-				sleep1(1400);
+				sleep1(1500);
 				v_left = 48;
 				v_right = 48;
 				SetMotors();
@@ -212,7 +212,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			v_left = 38;
 			v_right = v_right_go - 4;
 			SetMotors();
-			sleep1(600);
+			sleep1(700);
 			printf("\nturned left");
 			return 0;
 			} else if(lineCount >= 230){
