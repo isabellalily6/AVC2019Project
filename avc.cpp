@@ -228,7 +228,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
-			}else if(topLineCount > 50 && topLineCount < 110 && lineCount > 120 && vertLineCount > 100 && (err > 3 || err > -3)){
+			}else if(topLineCount > 50 && topLineCount < 110 && lineCount > 120 && vertLineCount > 100 && (err > 3 || err < -3 || prevErr > 3 || prevErr < -3)){
 					printf("\n\n\n\n\ngo forwards!!! \n\n\n");
 					v_left = v_left_go;
 					v_right = v_right_go;
