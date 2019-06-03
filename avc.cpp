@@ -265,7 +265,7 @@ int Robot::InitHardware(){
 	SetMotors();
 	
 	hardware_exchange();
-	sleep1(2000);
+	//sleep1(2000);
 	
 	return 0;
 }
