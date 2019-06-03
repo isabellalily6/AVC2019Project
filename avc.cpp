@@ -94,6 +94,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float totblueavg =0;
 	float whiteArr[cam_width];
 	float vertWhiteArr[cam_height];
+	float topWhiteArr[cam_height];
 	
 	double threshold = 110;
 	/*for(int i = 0; i < cam_width; i++){
@@ -112,6 +113,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	line_error = 0;
 	int lineCount = 0;
 	int vertLineCount = 0;
+	int topLineCount = 0;
 	
 	struct timespec ts_start;
 	//struct timespec deadStart;
@@ -136,6 +138,29 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			}
 			line_error += whiteArr[countCol] * (countCol-middleIndex);
 			lineCount += whiteArr[countCol];
+			}
+			/*
+			 * 
+			 * 
+			 * 	top line count
+			 * 
+			 * 
+			 * 
+			 */
+			for(int countCol = 0; countCol < 320; countCol++){
+			
+			totwhite = get_pixel(240/2, countCol,3); //for err line 
+			//printf("\n\n\n\ntotwhite: %.5f",totwhite);
+			
+			
+			
+			if(totwhite > threshold){
+				topWhiteArr[countCol] = 0; //0 is white
+			} else {
+			topWhiteArr[countCol] = 1;	//1 is black
+			}
+			//line_error += whiteArr[countCol] * (countCol-middleIndex);
+			topLineCount += whiteArr[countCol];
 			}
 			
 			clock_gettime(CLOCK_MONOTONIC, &ts_end);
@@ -226,6 +251,13 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				if(lineCount > 230){
 					xroadBool = 1;		
 				} 					
+			} else if(topLineCount > 50 && err > 2){
+					printf("\n\n\n\n\ngo forwards!!! \n\n\n");
+					v_left = v_left_go;
+					v_right = v_right_go;
+					SetMotors();
+					sleep1(400);
+					return 0;
 			}
 			 printf("\n new pic :");
 			 prevLineCount = lineCount;
