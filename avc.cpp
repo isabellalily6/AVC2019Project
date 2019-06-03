@@ -95,11 +95,11 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float whiteArr[cam_width];
 	float vertWhiteArr[cam_height];
 	
-	double threshold = 0;
-	for(int i = 0; i < cam_width; i++){
+	double threshold = 100;
+	/*for(int i = 0; i < cam_width; i++){
 		threshold += get_pixel(120,i,3);
 	}
-	threshold /= cam_width;
+	threshold /= cam_width; */
 	//double prevThresh = 100;
 	
 		
