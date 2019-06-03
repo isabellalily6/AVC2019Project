@@ -14,8 +14,7 @@ class Robot{
    int prevLineCount = 0;
    
     
-    double leftLine_error = 0;
-    double rightLine_error = 0;
+    
     int quadrant = 2;
     const int cam_width = 320;
     const int cam_height = 240;
@@ -33,7 +32,7 @@ class Robot{
     int deadEndBool = 0;
     int xroadBool = 0;
     public:
-    //Rob(){};
+    //methods/functions
 	int InitHardware();
 	int reverse();
 	int SetMotors();
@@ -41,8 +40,6 @@ class Robot{
 	int FollowLine();
 	void openGate();
 
-	void fullTurn();
-		
 };
 void Robot::openGate(){
 	char server_addr[15] = {'1', '3', '0', '.', '1', '9', '5', '.', '6', '.', '1', '9', '6'};
@@ -72,9 +69,8 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float totblueavg =0;
 	float whiteArr[cam_width];
 	float vertWhiteArr[cam_height];
-	float errorArray[cam_width];
-	int whiteBool = 0;
 	
+	int whiteBool = 0;	
 	double threshold = 60;
 	//double prevThresh = 100;
 	
@@ -93,8 +89,6 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	//struct timespec deadStart;
 	struct timespec ts_end;
 	
-	rightLine_error = 0;
-	leftLine_error = 0;
 	clock_gettime(CLOCK_MONOTONIC, &ts_start);
 	
 	
@@ -145,8 +139,6 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				vertLineCount += whiteArr[countRow];
 			}
 			printf(" \n\nn vertLineCount: %d \n\nn\n",vertLineCount);
-				
-				
 				
 			
 			
@@ -201,29 +193,11 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				xroadBool = 1;
 							
 			}
-			
-			
-			
-			
-			
-			/*if(err > 4 && vertLineCount > 50 && lineCount > 120 && lineCount < 195)	{
-				printf("\n\n\n\n\n\n\n\n\n\n\n*****************************************************\n\n\n\n\n\n\n\n\n\n\n\nInching forwards ...");
-			
-				v_left = v_left_go + 1;
-				v_right = v_right_go - 1;
-				SetMotors();
-				sleep1(600);
-				return 0;
-				
-				
-			} */
-		    //printf("\nwhiteness: %.1f",totwhite);
 			 printf("\n new pic :");
 			 prevLineCount = lineCount;
 			 prevErr = err;
 			 prev_error = line_error;
-		} 
-	
+		} 	
 	return 0;	
 } 
 int Robot::SetMotors(){
@@ -231,10 +205,8 @@ int Robot::SetMotors(){
 	 set_motors(3, v_left);
 	 set_motors(5, v_right);
 	 printf("\nSet Motors: v_left: %d v_right: %d",v_left,v_right);
-	 hardware_exchange();
-	 
+	 hardware_exchange();	 
 	 return 0; 
-
 }
 int Robot::FollowLine(){
 	MeasureLine();
@@ -277,16 +249,6 @@ int Robot::reverse() {
 	return 0;
 }
 
-void Robot::fullTurn() {
-		v_left = 44;
-		v_right = 52;
-		SetMotors();
-		sleep1(2400);
-		printf("\n\n\n------\n\n\n\n\n ------ turn around over --------\n\n\n------\n\n\n\n\n\n\n\n");
-		v_left = v_left_go;
-		v_right =v_right_go;
-		SetMotors();		
-}
 
 int Robot::InitHardware(){
 	init(0);
