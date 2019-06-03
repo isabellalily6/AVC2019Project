@@ -70,7 +70,6 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 	float whiteArr[cam_width];
 	float vertWhiteArr[cam_height];
 	
-	int whiteBool = 0;	
 	double threshold = 80;
 	//double prevThresh = 100;
 	
@@ -148,7 +147,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				
 			printf("\n\nLineCount: %d\n\n",lineCount);
 			
-			if((err > 2 || err < -2) && lineCount < 250) {
+			if((err > 2 || err < -2) && lineCount < 250 && xroadBool == 0) {
 				
 				corner = 1;
 				printf("Corner: %d",corner);
@@ -195,7 +194,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				SetMotors();
 				sleep1(400);
 				
-				if(lineCount > 230 && corner == 0){
+				if(lineCount > 230){
 					xroadBool = 1;		
 				} 					
 			}
