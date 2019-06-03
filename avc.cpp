@@ -46,7 +46,7 @@ class Robot{
     const int v_left_go = 50;
     const int v_right_go = 46;
     double kp = 0.0007;
-    double kd = 0.008;
+    double kd = 0.009;
     double err;
     double prevErr = 0;
     
