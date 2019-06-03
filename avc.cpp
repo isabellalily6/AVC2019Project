@@ -147,7 +147,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				totblueavg /= cam_width;
 				
 			printf("\n\nLineCount: %d\n\n",lineCount);
-			if(err > 1 || err < -1 ) {
+			if(err > 2 || err < -2 ) {
 				corner = 1;
 			}
 			if(vertLineCount > 50 && (err < 1 || err > -1) && lineCount < 130){
@@ -170,7 +170,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
-			} else if ((lineCount >= 230 && (err < 1 || err > 5.25) && (lineCount - prevLineCount) < 50 && xroadBool == 1) || lineCount > 270){
+			} else if ((lineCount >= 230 && (err < 1 || err > 5.25) && (lineCount - prevLineCount) < 50 && xroadBool == 1 && corner == 0) || lineCount > 270){
 			printf("\n------------------------------------------------------------------------------------\n\n\n\n Robot is at a cross road\n\n\n\n\n")	;
 			v_left = v_left_go;
 			v_right = v_right_go;
@@ -189,9 +189,10 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				v_right = 48;
 				SetMotors();
 				sleep1(400);
-				if(lineCount > 230){
-				xroadBool = 1;		
-			}					
+				
+				if(lineCount > 230 && corner == 0){
+					xroadBool = 1;		
+				} 					
 			}
 			 printf("\n new pic :");
 			 prevLineCount = lineCount;
