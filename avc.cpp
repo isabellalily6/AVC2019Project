@@ -147,10 +147,10 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				totblueavg /= cam_width;
 				
 			printf("\n\nLineCount: %d\n\n",lineCount);
-			if(err > 2 || err < -2 ) {
+			if(err > 1 || err < -1 ) {
 				corner = 1;
 			}
-			if(vertLineCount > 50 && (err < 1 || err > -1) && lineCount < 130){
+			if(vertLineCount > 60 && (err < 1 || err > -1) && lineCount < 115){
 			corner = 0;	
 			}
 			
