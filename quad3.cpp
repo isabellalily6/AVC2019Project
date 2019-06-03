@@ -165,7 +165,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			
 			
 			
-			totredavg /= cam_width;
+				totredavg /= cam_width;
 				totblueavg /= cam_width;
 				//printf("\n red: %.3f blue: %.3f",totredavg, totblueavg);
 				if (totredavg - totblueavg > 130){
