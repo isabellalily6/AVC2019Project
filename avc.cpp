@@ -259,10 +259,13 @@ int Robot::InitHardware(){
 	open_screen_stream();
 	take_picture();
 	update_screen();
+	
 	v_left = v_left_go;
 	v_right = v_right_go;
 	SetMotors();
+	
 	hardware_exchange();
+	sleep1(2000);
 	
 	return 0;
 }
