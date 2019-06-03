@@ -228,6 +228,13 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
+			}else if(topLineCount > 50 && topLineCount < 110 && lineCount > 120 && vertLineCount > 100 && (err > 3 || err > -3)){
+					printf("\n\n\n\n\ngo forwards!!! \n\n\n");
+					v_left = v_left_go;
+					v_right = v_right_go;
+					SetMotors();
+					sleep1(400);
+					return 0;
 			} else if ((lineCount >= 230 && (err < 1 || err > 5.25) && (lineCount - prevLineCount) < 50 && xroadBool == 1 && corner == 0 && (err - prevErr < 1 && err - prevErr > -1)) || (lineCount > 270 && corner == 0) || (lineCount > 302 && prevErr < 4) ){
 			printf("\n------------------------------------------------------------------------------------\n\n\n\n Robot is at a cross road\n\n\n\n\n")	;
 			v_left = v_left_go;
@@ -251,14 +258,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				if(lineCount > 230){
 					xroadBool = 1;		
 				} 					
-			} else if(topLineCount > 50 && topLineCount < 110 && lineCount > 120 && vertLineCount > 100 && (err > 3 || err > -3)){
-					printf("\n\n\n\n\ngo forwards!!! \n\n\n");
-					v_left = v_left_go;
-					v_right = v_right_go;
-					SetMotors();
-					sleep1(400);
-					return 0;
-			}
+			} 
 			 printf("\n new pic :");
 			 prevLineCount = lineCount;
 			 prevErr = err;
