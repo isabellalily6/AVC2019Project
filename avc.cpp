@@ -45,8 +45,8 @@ class Robot{
     const int cam_height = 240;
     const int v_left_go = 50;
     const int v_right_go = 46;
-    double kp = 0.0008;
-    double kd = 0.0007;
+    double kp = 0.0007;
+    double kd = 0.008;
     double err;
     double prevErr = 0;
     
