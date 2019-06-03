@@ -203,7 +203,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					
 					reverseBool = 1; //if the line is not present reverse
 					return 0;
-			} else if ((lineCount >= 250 && (err < 1 || err > 5) && (lineCount - prevLineCount) < 50) || lineCount > 300){
+			} else if ((lineCount >= 230 && (err < 1 || err > 5) && (lineCount - prevLineCount) < 50) || lineCount > 300){
 			printf("\n------------------------------------------------------------------------------------\n\n\n\n Robot is at a cross road\n\n\n\n\n")	;
 			v_left = v_left_go;
 			v_right = v_right_go;
@@ -215,7 +215,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			sleep1(600);
 			printf("\nturned left");
 			return 0;
-			} else if(lineCount >= 250){
+			} else if(lineCount >= 230){
 				printf("\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n\n lemme think\n\n\n");
 				v_left = 48;
 				v_right = 48;
