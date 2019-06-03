@@ -251,7 +251,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				if(lineCount > 230){
 					xroadBool = 1;		
 				} 					
-			} else if(topLineCount > 50 && lineCount > 80 && vertLineCount > 60 && (err > 3 || err > -3)){
+			} else if(topLineCount > 50 && lineCount > 120 && vertLineCount > 60 && (err > 3 || err > -3)){
 					printf("\n\n\n\n\ngo forwards!!! \n\n\n");
 					v_left = v_left_go;
 					v_right = v_right_go;
