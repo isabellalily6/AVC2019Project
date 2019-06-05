@@ -40,7 +40,7 @@ class Robot{
    
     
     
-    int quadrant = 2;
+    int quadrant = 1;
     const int cam_width = 320;
     const int cam_height = 240;
     const int v_left_go = 50;
@@ -78,7 +78,7 @@ void Robot::openGate(){
 	v_left = 52;
 	v_right = 44;
 	SetMotors();
-	sleep1(2000);
+	sleep1(2500);
 	quadrant = 2;
 	v_left = v_left_go;
 	v_right = v_right_go;
@@ -335,7 +335,7 @@ int main() {
 	int courseOver = 0;
 	Robot robot;
 	robot.InitHardware();
-	//robot.openGate();
+	robot.openGate();
 	
 	
 	while(true){
