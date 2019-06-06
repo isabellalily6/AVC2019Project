@@ -40,7 +40,7 @@ class Robot{
    
     
     
-    int quadrant = 2;
+    int quadrant = 1;
     const int cam_width = 320;
     const int cam_height = 240;
     const int v_left_go = 50;
@@ -75,11 +75,11 @@ void Robot::openGate(){
 	send_to_server(message);
 	receive_from_server(password);
 	send_to_server(password);
-	v_left = 52;
-	v_right = 44;
+	v_left = v_left_go + 5;
+	v_right = v_right_go - 5;
 	SetMotors();
 	sleep1(2500);
-	quadrant = 1;
+	quadrant = 2;
 	v_left = v_left_go;
 	v_right = v_right_go;
 	SetMotors();
@@ -240,7 +240,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 			v_left = v_left_go;
 			v_right = v_right_go;
 			SetMotors();
-			sleep1(600);
+			sleep1(700);
 			v_left = 38;
 			v_right = v_right_go - 4;
 			SetMotors();
@@ -325,10 +325,7 @@ int Robot::InitHardware(){
 	v_left = v_left_go;
 	v_right = v_right_go;
 	SetMotors();
-	v_left = v_left_go + 5;
-	v_right = v_right_go - 5;
-	SetMotors();
-	sleep1(2500);
+	
 	//sleep1(2500); // comment this out
 	
 	
@@ -341,7 +338,7 @@ int main() {
 	int courseOver = 0;
 	Robot robot;
 	robot.InitHardware();
-	//robot.openGate();
+	robot.openGate();
 	
 	
 	
