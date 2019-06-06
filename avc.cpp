@@ -235,7 +235,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 					SetMotors();
 					sleep1(400);
 					return 0;
-			} else if ((lineCount >= 230 && (err < 1 || err > 5.25) && (lineCount - prevLineCount) < 50 && xroadBool == 1 && corner == 0 && (err - prevErr < 1 && err - prevErr > -1)) || (lineCount > 270 && corner == 0 (prevErr < 1.5 && prevErr > -1.5)) || (lineCount > 310 && (prevErr < 3.85 && prevErr > -3.85)) ){
+			} else if ((lineCount >= 230 && (err < 1 || err > 5.25) && (lineCount - prevLineCount) < 50 && xroadBool == 1 && corner == 0 && (err - prevErr < 1 && err - prevErr > -1)) || (lineCount > 270 && corner == 0 (prevErr < 1.5 && prevErr > -1.5) || (lineCount > 310 && (prevErr < 3.85 && prevErr > -3.85)) ){
 			printf("\n------------------------------------------------------------------------------------\n\n\n\n Robot is at a cross road\n\n\n\n\n")	;
 			v_left = v_left_go;
 			v_right = v_right_go;
