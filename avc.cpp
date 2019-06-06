@@ -325,6 +325,10 @@ int Robot::InitHardware(){
 	v_left = v_left_go;
 	v_right = v_right_go;
 	SetMotors();
+	v_left = v_left_go + 5;
+	v_right = v_right_go - 5;
+	SetMotors();
+	sleep1(2500);
 	//sleep1(2500); // comment this out
 	
 	
@@ -338,10 +342,7 @@ int main() {
 	Robot robot;
 	robot.InitHardware();
 	//robot.openGate();
-	v_left = v_left_go + 5;
-	v_right = v_right_go - 5;
-	SetMotors();
-	sleep1(2500)
+	
 	
 	
 	while(true){
