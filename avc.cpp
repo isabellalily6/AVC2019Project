@@ -79,7 +79,7 @@ void Robot::openGate(){
 	v_right = 44;
 	SetMotors();
 	sleep1(2500);
-	quadrant = 2;
+	quadrant = 1;
 	v_left = v_left_go;
 	v_right = v_right_go;
 	SetMotors();
@@ -335,7 +335,7 @@ int main() {
 	int courseOver = 0;
 	Robot robot;
 	robot.InitHardware();
-	robot.openGate();
+	//robot.openGate();
 	
 	
 	while(true){
