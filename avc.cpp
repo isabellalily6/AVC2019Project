@@ -206,7 +206,7 @@ int Robot::MeasureLine(){ //only coded for quad 2 rn
 				
 				corner = 1;
 				printf("Corner: %d",corner);
-			} else if(vertLineCount > 40 && (err < 1 || err > -1) && lineCount < 180 && (prevErr < 1 && prevErr > -1)){
+			} else if(vertLineCount > 30 && (err < 1.5 || err > -1.5) && lineCount < 180 && (prevErr < 1.5 && prevErr > -1.5)){
 			corner = 0;	
 			printf("Corner: %d",corner);
 			}
