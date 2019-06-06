@@ -325,6 +325,8 @@ int Robot::InitHardware(){
 	v_left = v_left_go;
 	v_right = v_right_go;
 	SetMotors();
+	sleep1(2500); // comment this out
+	
 	
 	hardware_exchange();
 	//sleep1(2000);
